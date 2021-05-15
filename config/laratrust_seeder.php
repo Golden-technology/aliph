@@ -18,6 +18,7 @@ return [
             'customers'     => 'c,r,u,d',
             'vendors'       => 'c,r,u,d',
             'categories'    => 'c,r,u,d',
+            'stores'        => 'c,r,u,d',
             'dashboard'     => 'r',
         ],
     ],

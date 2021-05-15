@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
@@ -30,6 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('customers', CustomerController::class);
     Route::resource('vendors', VendorController::class);
     Route::resource('categories', CategoryController::class);
+    Route::resource('stores', StoreController::class);
     Route::post('profile', [UserController::class, 'profile'])->name('profile');
 });
 
