@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TaxController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
@@ -34,6 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('stores', StoreController::class);
     Route::resource('units', UnitController::class);
+    Route::resource('taxes', TaxController::class);
     Route::post('profile', [UserController::class, 'profile'])->name('profile');
 });
 
