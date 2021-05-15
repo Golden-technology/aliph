@@ -20,6 +20,7 @@ return [
             'categories'    => 'c,r,u,d',
             'stores'        => 'c,r,u,d',
             'units'         => 'c,r,u,d',
+            'taxes'         => 'c,r,u,d',
             'dashboard'     => 'r',
         ],
     ],
