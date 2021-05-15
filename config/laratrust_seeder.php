@@ -19,6 +19,7 @@ return [
             'vendors'       => 'c,r,u,d',
             'categories'    => 'c,r,u,d',
             'stores'        => 'c,r,u,d',
+            'units'         => 'c,r,u,d',
             'dashboard'     => 'r',
         ],
     ],
