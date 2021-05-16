@@ -21,6 +21,7 @@ return [
             'stores'        => 'c,r,u,d',
             'units'         => 'c,r,u,d',
             'taxes'         => 'c,r,u,d',
+            'items'         => 'c,r,u,d',
             'dashboard'     => 'r',
         ],
     ],
