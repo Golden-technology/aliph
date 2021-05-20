@@ -17,6 +17,24 @@ class ItemStore extends Model
     protected $fillable = [
         'item_id',
         'store_id',
+        'unit_id',
         'quantity',
     ];
+
+
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class, 'item_id');
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class , 'unit_id');
+    }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class, 'store_id');
+    }
 }

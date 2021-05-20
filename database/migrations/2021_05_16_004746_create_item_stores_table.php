@@ -17,6 +17,7 @@ class CreateItemStoresTable extends Migration
             $table->id();
             $table->foreignId('item_id')->constrained('items');
             $table->foreignId('store_id')->constrained('stores');
+            $table->foreignId('unit_id')->constrained('units');
             $table->integer('quantity');
             $table->timestamps();
         });

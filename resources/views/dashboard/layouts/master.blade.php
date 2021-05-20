@@ -34,7 +34,6 @@
                 @yield('page-header')
                 @yield('content')
                 @include('dashboard.layouts.sidebar')
-
                 @isset($modals)
                     @foreach ($modals as $modal)
                         @include('dashboard.modals.' . $modal)
@@ -43,6 +42,7 @@
                 {{-- @include('dashboard.layouts.models') --}}
                 {{-- @include('dashboard.layouts.footer') --}}
                 @include('dashboard.layouts.footer-scripts')
+                @include('dashboard.layouts.notification')
 
             </div>
         </div>

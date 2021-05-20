@@ -23,8 +23,7 @@ class Item extends Model
         'image',
         'vendor_id',
         'category_id',
-        'unit_id',
-        'currency'
+        'currency',
     ];
 
     public function vendor()
@@ -60,6 +59,17 @@ class Item extends Model
         $path       = $fileupload->move(public_path('images/items'), '/' . 'image_' . time() . $name_image_rand .'.' . $extention);
         $nameimage = '/images/items' .  '/image_' . time() . $name_image_rand .  '.' . $extention;
         return $nameimage;
+    }
+
+    // public function store()
+    // {
+    //     return $this->hasOneThrough(ItemStore::class , Store::class);
+    // }
+
+    
+    public function stores()
+    {
+        return $this->hasMany(ItemStore::class);
     }
 
 

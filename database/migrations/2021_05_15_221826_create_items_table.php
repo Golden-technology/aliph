@@ -24,7 +24,6 @@ class CreateItemsTable extends Migration
             $table->string('image')->nullable();
             $table->foreignId('vendor_id')->nullable()->references('id')->on('vendors');
             $table->foreignId('category_id')->nullable()->references('id')->on('categories');
-            $table->foreignId('unit_id')->nullable()->references('id')->on('units');
             $table->timestamps();
         });
     }

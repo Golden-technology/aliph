@@ -103,6 +103,26 @@
                                             </select>
                                         </div>
                                     </div>
+
+
+                                    <div class="col-md-12">
+                                        <table id="stores" class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>{{ translate('المخزن') }}</th>
+                                                    <th>{{ translate('الوحدة') }}</th>
+                                                    <th>{{ translate('الكمية') }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                        <tfoot>
+                                            <button type="button" id="add-store" class="btn btn-primary " data-stores="{{ $stores }}" data-units="{{ $units }}" ><i class="fa fa-plus"></i> {{ translate('اضافة') }} </button>
+                                        </tfoot>
+                                    </div>
                                     
                                 </div>
                             </div>
@@ -128,3 +148,42 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+    {{-- <script src="{{ asset('js/dashboard/items.js') }}"></script> --}}
+
+    <script>
+        $(function () {
+            let count = 0
+            $('#add-store').click(function () {
+                count++
+
+                row = `
+                    <tr>
+                        <td>`+ count +`</td>
+                        <td>
+                            <select class="form-control" name="stores[]">
+                                @foreach($stores as $store)
+                                    <option value="{{ $store->id }}">{{ $store->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" name="units[]">
+                                @foreach($units as $unit)
+                                    <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="quantity[]" />
+                        </td>
+                    </tr>
+                `
+
+                $('#stores tbody').append(row)
+            })
+
+            })
+    </script>
+@endpush

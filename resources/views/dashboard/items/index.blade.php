@@ -27,7 +27,7 @@
                         <thead>
                             <tr>
                                 <th class="border-top-0">#</th>
-                                <th class="border-top-0">{{ translate('المخزن') }}</th>
+                                {{-- <th class="border-top-0">{{ translate('المخزن') }}</th> --}}
                                 <th class="border-top-0">{{ translate('المنتج') }}</th>
                                 <th class="border-top-0">{{ translate('الكمية') }}</th>
                                 <th class="border-top-0">{{ translate('السعر') }}</th>
@@ -38,15 +38,16 @@
                             @foreach ($items as $item)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
-                                    <td>{{ $item->store->name }}</td>
+                                    {{-- <td>{{ $item->store->name }}</td> --}}
+                                    <td>{{ $item->name }}</td>
                                     <td>0</td>
-                                    <td>{{ $item->price_purches }}</td>
+                                    <td>{{ $item->price_purchase ?? 0 }}</td>
                                     <td>
-                                        @permission('items-show')
-                                            <a href="{{ route('items.show' . $item->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> {{ translate('عرض') }}</a>
+                                        @permission('items-read')
+                                            <a href="{{ route('items.show' , $item->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> {{ translate('عرض') }}</a>
                                         @endpermission
                                         @permission('items-update')
-                                            <a href="{{ route('items.edit' . $item->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> {{ translate('تعديل') }}</a>
+                                            <a href="{{ route('items.edit' , $item->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> {{ translate('تعديل') }}</a>
                                         @endpermission
                                     </td>
                                 </tr>

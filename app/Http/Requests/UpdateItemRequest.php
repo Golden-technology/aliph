@@ -13,7 +13,7 @@ class UpdateItemRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class UpdateItemRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => ['required' , 'string', 'unique:items,name,' . $this->id],
+            'name'      => ['required' , 'string'],
             'image'     => ['nullable', 'image'],
             'is_service' => ['nullable'],
             'price_sale' => ['nullable'],
@@ -32,7 +32,8 @@ class UpdateItemRequest extends FormRequest
             'tax' => ['nullable'],
             'vendor_id' => ['nullable'],
             'category_id' => ['nullable'],
-            'unit_id' => ['nullable'],
+            'units' => ['nullable'],
+            'stores' => ['nullable'],
             'currency' => ['nullable'],
             // 'currency'  => ['required' , 'string'],
         ];
