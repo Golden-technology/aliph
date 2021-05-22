@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tax;
+use App\Models\InitialInvoiceItem;
 use Illuminate\Http\Request;
 
-class TaxController extends Controller
+class InitialInvoiceItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class TaxController extends Controller
      */
     public function index()
     {
-        $taxes = Tax::paginate();
-        return view('dashboard.taxes.index', compact('taxes'));
+        //
     }
 
     /**
@@ -36,22 +35,16 @@ class TaxController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'value'     => ['required', 'unique:taxes'],
-        ]);
-
-        $tax = Tax::create($request->all());
-
-        return back()->with('success', translate('تمت العملية بنجاح'));
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\tax  $tax
+     * @param  \App\Models\InitialInvoiceItem  $initialInvoiceItem
      * @return \Illuminate\Http\Response
      */
-    public function show(tax $tax)
+    public function show(InitialInvoiceItem $initialInvoiceItem)
     {
         //
     }
@@ -59,10 +52,10 @@ class TaxController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\tax  $tax
+     * @param  \App\Models\InitialInvoiceItem  $initialInvoiceItem
      * @return \Illuminate\Http\Response
      */
-    public function edit(tax $tax)
+    public function edit(InitialInvoiceItem $initialInvoiceItem)
     {
         //
     }
@@ -71,27 +64,21 @@ class TaxController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\tax  $tax
+     * @param  \App\Models\InitialInvoiceItem  $initialInvoiceItem
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, tax $tax)
+    public function update(Request $request, InitialInvoiceItem $initialInvoiceItem)
     {
-        $request->validate([
-            'value'     => ['required', 'unique:taxes,value,' . $tax->id],
-        ]);
-
-        $tax->update($request->all());
-
-        return back()->with('success', translate('تمت العملية بنجاح'));
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\tax  $tax
+     * @param  \App\Models\InitialInvoiceItem  $initialInvoiceItem
      * @return \Illuminate\Http\Response
      */
-    public function destroy(tax $tax)
+    public function destroy(InitialInvoiceItem $initialInvoiceItem)
     {
         //
     }

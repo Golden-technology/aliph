@@ -20,7 +20,7 @@ class CreateItemsTable extends Migration
             $table->double('price_sale')->nullable();
             $table->double('price_purchase')->nullable();
             $table->string('currency')->nullable();
-            $table->string('tax')->nullable();
+            $table->foreignId('tax_id')->nullable()->constrained('taxes');
             $table->string('image')->nullable();
             $table->foreignId('vendor_id')->nullable()->references('id')->on('vendors');
             $table->foreignId('category_id')->nullable()->references('id')->on('categories');

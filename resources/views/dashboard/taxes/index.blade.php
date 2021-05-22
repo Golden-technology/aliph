@@ -13,7 +13,7 @@
                     {{ translate('قائمة الضرائب') }}
                     @permission('taxes-create')
                         <a 
-                        class="btn btn-primary btn-sm left tax"
+                        class="btn btn-primary float-left tax"
                         href="#"
                         data-toggle="modal" 
                         data-target="#taxModal"

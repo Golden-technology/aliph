@@ -13,7 +13,7 @@
                     {{ translate('قائمة الاقسام') }}
                     @permission('categories-create')
                         <a 
-                        class="btn btn-primary btn-sm left category"
+                        class="btn btn-primary float-left category"
                         href="#"
                         data-toggle="modal" 
                         data-target="#categoryModal"

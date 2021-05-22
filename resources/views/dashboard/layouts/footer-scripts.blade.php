@@ -9,6 +9,21 @@
 <!-- Moment js -->
 <script src="{{URL::asset('assets/plugins/moment/moment.js')}}"></script>
 
+<!-- select 2 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #0162e8;
+        color: #fff;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('select').select2();
+    });
+</script>
+
 <!-- Rating js-->
 <script src="{{URL::asset('assets/plugins/rating/jquery.rating-stars.js')}}"></script>
 <script src="{{URL::asset('assets/plugins/rating/jquery.barrating.js')}}"></script>

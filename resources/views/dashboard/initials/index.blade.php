@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.master')
 
 @section('title')
-    {{ translate('قائمة المنتجات') }}
+    {{ translate('قائمة العروض') }}
 @endsection
 
 @section('content')
@@ -10,11 +10,11 @@
         <div class="card">
             <div class="card-header">
                 <h3>
-                    {{ translate('قائمة المنتجات') }}
-                    @permission('items-create')
+                    {{ translate('قائمة العروض') }}
+                    @permission('initials-create')
                         <a 
                         class="btn btn-primary float-left"
-                        href="{{ route('items.create') }}"
+                        href="{{ route('initials.create') }}"
                         >
                         <i class="fa fa-plus"> {{ translate('اضافة') }}</i>
                         </a>
@@ -27,25 +27,27 @@
                         <thead>
                             <tr>
                                 <th class="border-top-0">#</th>
-                                {{-- <th class="border-top-0">{{ translate('المخزن') }}</th> --}}
-                                <th class="border-top-0">{{ translate('القسم') }}</th>
-                                <th class="border-top-0">{{ translate('السعر') }}</th>
+                                <th class="border-top-0">{{ translate('العميل') }}</th>
+                                <th class="border-top-0">{{ translate('المبلغ') }}</th>
+                                <th class="border-top-0">{{ translate('الحالة') }}</th>
+                                <th class="border-top-0">{{ translate('تاريخ الانشاء') }}</th>
                                 <th class="border-top-0">{{ translate('خيارات') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($items as $item)
+                            @foreach ($initials as $initial)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->category->name }}</td>
-                                    <td>{{ $item->price_purchase ?? 0 }}</td>
+                                    <td>{{ $initial->customer->name }}</td>
+                                    <td>{{ $initial->total }}</td>
+                                    <td>{{ translate($initial->status) }}</td>
+                                    <td>{{ $initial->created_at->format('Y-m-d') }}</td>
                                     <td>
-                                        @permission('items-read')
-                                            <a href="{{ route('items.show' , $item->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> {{ translate('عرض') }}</a>
+                                        @permission('initials-read')
+                                            <a href="{{ route('initials.show' , $initial->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> {{ translate('عرض') }}</a>
                                         @endpermission
-                                        @permission('items-update')
-                                            <a href="{{ route('items.edit' , $item->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> {{ translate('تعديل') }}</a>
+                                        @permission('initials-update')
+                                            <a href="{{ route('initials.edit' , $initial->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> {{ translate('تعديل') }}</a>
                                         @endpermission
                                     </td>
                                 </tr>

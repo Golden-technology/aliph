@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateItemStoresTable extends Migration
+class CreateItemUnitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateItemStoresTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_stores', function (Blueprint $table) {
+        Schema::create('item_units', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('item_unit_id')->constrained('itemUnits');
-            $table->foreignId('store_id')->constrained('stores');
-            $table->integer('quantity');
+            $table->foreignId('item_id')->constrained('items');
+            $table->foreignId('unit_id')->constrained('units');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateItemStoresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_stores');
+        Schema::dropIfExists('item_units');
     }
 }

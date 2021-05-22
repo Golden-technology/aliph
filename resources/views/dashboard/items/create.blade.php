@@ -67,7 +67,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">{{ translate('الضريبة') }} :</label>
-                                            <select class="form-control" name="tax">
+                                            <select class="form-control" name="tax_id">
                                                 @foreach ($taxes as $tax)
                                                     <option value="{{ $tax->id }}">{{ $tax->value }}%</option>
                                                 @endforeach
@@ -75,17 +75,11 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="col-form-label">{{ translate('الكمية') }} :</label>
-                                            <input type="number" name="quantity" class="form-control" >
-                                        </div>
-                                    </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="recipient-name" class="col-form-label">{{ translate('الوحدة') }} :</label>
-                                            <select class="form-control" name="unit_id">
+                                            <label for="recipient-name" class="col-form-label">{{ translate('الوحدات') }} :</label>
+                                            <select class="form-control" name="units[]" multiple>
                                                 @foreach ($units as $unit)
                                                     <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                                                 @endforeach
@@ -93,37 +87,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="col-form-label">{{ translate('المخزن') }} :</label>
-                                            <select class="form-control" name="store_id">
-                                                @foreach ($stores as $store)
-                                                    <option value="{{ $store->id }}">{{ $store->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-md-12">
-                                        <table id="stores" class="table table-bordered table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>{{ translate('المخزن') }}</th>
-                                                    <th>{{ translate('الوحدة') }}</th>
-                                                    <th>{{ translate('الكمية') }}</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
-                                        <tfoot>
-                                            <button type="button" id="add-store" class="btn btn-primary " data-stores="{{ $stores }}" data-units="{{ $units }}" ><i class="fa fa-plus"></i> {{ translate('اضافة') }} </button>
-                                        </tfoot>
-                                    </div>
-                                    
                                 </div>
                             </div>
                             <div class="col-md-4">

@@ -19,7 +19,7 @@ class Item extends Model
         'is_service',
         'price_sale',
         'price_purchase',
-        'tax',
+        'tax_id',
         'image',
         'vendor_id',
         'category_id',
@@ -36,9 +36,14 @@ class Item extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function unit()
+    public function tax()
     {
-        return $this->belongsTo(Unit::class);
+        return $this->belongsTo(Tax::class, 'tax_id');
+    }
+
+    public function units()
+    {
+        return $this->hasMany(ItemUnit::class);
     }
 
 
@@ -60,11 +65,6 @@ class Item extends Model
         $nameimage = '/images/items' .  '/image_' . time() . $name_image_rand .  '.' . $extention;
         return $nameimage;
     }
-
-    // public function store()
-    // {
-    //     return $this->hasOneThrough(ItemStore::class , Store::class);
-    // }
 
     
     public function stores()

@@ -22,6 +22,8 @@ return [
             'units'         => 'c,r,u,d',
             'taxes'         => 'c,r,u,d',
             'items'         => 'c,r,u,d',
+            'initials'      => 'c,r,u,d',
+            'bills'         => 'c,r,u,d',
             'dashboard'     => 'r',
         ],
     ],

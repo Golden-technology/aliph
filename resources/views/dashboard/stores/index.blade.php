@@ -13,7 +13,7 @@
                     {{ translate('قائمة المخازن') }}
                     @permission('stores-create')
                         <a 
-                        class="btn btn-primary btn-sm left store"
+                        class="btn btn-primary float-left store"
                         href="#"
                         data-toggle="modal" 
                         data-target="#storeModal"

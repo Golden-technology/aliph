@@ -29,12 +29,12 @@ class StoreItemRequest extends FormRequest
             'is_service' => ['nullable'],
             'price_sale' => ['nullable'],
             'price_purchase'=> ['nullable'],
-            'tax' => ['nullable'],
+            'tax_id' => ['nullable'],
             'vendor_id' => ['nullable'],
             'category_id' => ['nullable'],
             'unit_id' => ['nullable'],
             'currency' => ['nullable'],
-            // 'currency'  => ['required' , 'string'],
+            'units'  => ['nullable' , 'array'],
         ];
     }
 }

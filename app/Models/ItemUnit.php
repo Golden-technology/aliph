@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ItemStore extends Model
+class ItemUnit extends Model
 {
     use HasFactory;
 
@@ -15,20 +15,19 @@ class ItemStore extends Model
      * @var array
      */
     protected $fillable = [
-        'item_unit_id',
-        'store_id',
-        'quantity',
+        'item_id',
+        'unit_id',
     ];
 
-
-
-    public function itemUnit()
+    public function item()
     {
-        return $this->belongsTo(ItemUnit::class, 'item_unit_id');
+        return $this->belongsTo(Item::class, 'item_id');
     }
 
-    public function store()
+    public function unit()
     {
-        return $this->belongsTo(Store::class, 'store_id');
+        return $this->belongsTo(Unit::class, 'unit_id');
     }
+
+
 }
