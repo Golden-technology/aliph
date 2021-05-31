@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.master')
 
 @section('title')
-    {{ translate('عر ض فاتورة مشتريات') }}
+    {{ translate('عرض فاتورة') }}
 @endsection
 
 @section('content')
@@ -9,21 +9,21 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h3>{{ translate('رقم  فاتورة المشتريات') }} : {{$bill->id }}</h3>
+                <h3>{{ translate('رقم الفاتورة') }} : {{$initial->id }}</h3>
             </div>
             <div class="card-body text-center">
                 <div class="row">
                     <div class="col-md-12">
                         <table class="table table-bordered">
                             <tr>
-                                <th>{{ translate('المورد') }}</th>
-                                <td>{{ $bill->vendor->name }}</td>
+                                <th>{{ translate('العميل') }}</th>
+                                <td>{{ $initial->customer->name }}</td>
                                 <th>{{ translate('المبلغ') }}</th>
-                                <td>{{ $bill->total }}</td>
+                                <td>{{ $initial->total }}</td>
                                 <th>{{ translate('الحالة') }}</th>
-                                <td>{{ $bill->status }}</td>
+                                <td>{{ $initial->status }}</td>
                                 <th>{{ translate('تاريخ الانشاء') }}</th>
-                                <td>{{ $bill->created_at->format('Y-m-d') }}</td>
+                                <td>{{ $initial->created_at->format('Y-m-d') }}</td>
                             </tr>
                         </table>
 
@@ -42,11 +42,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($bill->items as $item)
+                                @foreach ($initial->items as $item)
                                     <tr>
                                         <td>{{ $loop->index + 1 }}</td>
-                                        <td>{{ $item->itemStore->itemUnit->item->name }}</td>
-                                        <td>{{ $item->itemStore->itemUnit->unit->name }}</td>
+                                        <td>{{ $item->item->name }}</td>
+                                        <td>{{ $item->unit->name }}</td>
                                         <td>{{ $item->quantity }}</td>
                                         <td>{{ $item->price }}</td>
                                         <td>{{ $item->tax }}%</td>
@@ -63,7 +63,7 @@
             </div>
             <div class="card-footer">
                 @permission('items-update')
-                    <a href="{{ route('bills.edit' , $bill->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> {{ translate('تعديل') }}</a>
+                    <a href="{{ route('initials.edit' , $initial->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> {{ translate('تعديل') }}</a>
                 @endpermission
             </div>
         </div>

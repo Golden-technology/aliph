@@ -22,8 +22,10 @@
                                 <td>{{ $item->category->name }}</td>
                             </tr>
                             <tr>
-                                <th>{{ translate('المورد') }}</th>
-                                <td>{{ $item->vendor->name }}</td>
+                                {{-- <th>{{ translate('المورد') }}</th>
+                                <td>{{ $item->vendor->name }}</td> --}}
+                                <th>{{ translate('العملة') }}</th>
+                                <td>{{ $item->currency ?? '-' }}</td>
                                 <th>{{ translate('الوحدات') }}</th>
                                 <td>
                                     @foreach ($item->units as $unit)
@@ -31,21 +33,20 @@
                                     @endforeach
                                 </td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <th>{{ translate('سعر الشراء') }}</th>
                                 <td>{{ $item->price_sale }}</td>
                                 <th>{{ translate('سعر البيع') }}</th>
                                 <td>
                                     {{ $item->price_purchase }}
                                 </td>
-                            </tr>
+                            </tr> --}}
                             <tr>
-                                <th>{{ translate('العملة') }}</th>
-                                <td>{{ $item->currency ?? '-' }}</td>
-                                <th>{{ translate('الضريبة') }}</th>
+                                
+                                {{-- <th>{{ translate('الضريبة') }}</th>
                                 <td>
                                     {{ $item->tax->value }}%
-                                </td>
+                                </td> --}}
                             </tr>
                         </table>
 

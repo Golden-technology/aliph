@@ -23,4 +23,9 @@ class BillItem extends Model
         'tax',
         'discount',
     ];
+
+    public function itemStore()
+    {
+        return $this->belongsTo(ItemStore::class, 'item_store_id');
+    }
 }

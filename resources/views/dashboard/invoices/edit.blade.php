@@ -30,13 +30,6 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="recipient-name" class="col-form-label">{{ translate(' الباركود') }} :</label>
-                                            <input type="text" class="form-control" name="barcode" value="{{ $item->barcode }}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">{{ translate('القسم') }} :</label>
                                             <select class="form-control" name="category_id">
                                                 <option value="">{{ translate('اختار القسم') }}</option>
@@ -47,7 +40,7 @@
                                         </div>
                                     </div>
     
-                                    {{-- <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="col-form-label">{{ translate('سعر الشراء') }} :</label>
                                             <input type="number" class="form-control" value="{{ $item->price_sale }}" name="price_sale" step="0.1">
@@ -59,9 +52,9 @@
                                             <label class="col-form-label">{{ translate('سعر البيع') }} :</label>
                                             <input type="number" class="form-control" value="{{ $item->price_purchase }}" name="price_purchase" step="0.1">
                                         </div>
-                                    </div> --}}
+                                    </div>
     
-                                    {{-- <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">{{ translate('المورد') }} :</label>
                                             <select class="form-control"  name="vendor_id">
@@ -70,32 +63,86 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div> --}}
+                                    </div>
 
-                                    {{-- <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">{{ translate('الضريبة') }} :</label>
-                                            <select class="form-control"  name="tax_id">
+                                            <select class="form-control"  name="tax">
                                                 @foreach ($taxes as $tax)
                                                     <option value="{{ $tax->id }}" {{ $item->tax_id == $tax->id ? 'selected' : '' }}>{{ $tax->value }}%</option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div> --}}
+                                    </div>
 
+                                    {{-- <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label">{{ translate('الكمية') }} :</label>
+                                            <input type="number"  name="quantity" class="form-control" >
+                                        </div>
+                                    </div> --}}
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">{{ translate('الوحدة') }} :</label>
-                                            <select class="form-control" multiple  name="units[]">
+                                            <select class="form-control"  name="unit_id">
                                                 @foreach ($units as $unit)
-                                                    <option value="{{ $unit->id }}" {{ in_array($unit->id, $item->units->pluck('unit_id')->toArray()) ?  'selected' : '' }}>{{ $unit->name }}</option>
+                                                    <option value="{{ $unit->id }}" {{ $item->unit_id == $unit->id ? 'selected' : '' }}>{{ $unit->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
 
+                                    {{-- <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label">{{ translate('المخزن') }} :</label>
+                                            <select class="form-control"  name="store_id">
+                                                @foreach ($stores as $store)
+                                                    <option value="{{ $store->id }}" {{ $item->store_id == $store->id ? 'selected' : '' }}>{{ $store->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div> --}}
 
+                                    <div class="col-md-12">
+                                        <table id="stores" class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>{{ translate('المخزن') }}</th>
+                                                    <th>{{ translate('الوحدة') }}</th>
+                                                    <th>{{ translate('الكمية') }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($item->stores as $item_store)
+                                                    <tr>
+                                                        <td>{{ $loop->index + 1 }}</td>
+                                                        <td>
+                                                            <input type="hidden" name="item_store[]" value="{{ $item_store->id }}">
+                                                            <select name="stores[]" class="form-control">
+                                                                @foreach ($stores as $store)
+                                                                    <option value="{{ $store->id }}" {{ $item_store->store->id == $store->id ? 'selected' : '' }}>{{ $store->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select name="units[]" class="form-control">
+                                                                @foreach ($units as $unit)
+                                                                    <option value="{{ $unit->id }}" {{ $item_store->unit->id == $unit->id ? 'selected' : '' }}>{{ $unit->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </td>
+                                                        <td><input type="number" name="quantity[]" class="form-control" value="{{ $item_store->quantity }}"></td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        <tfoot>
+                                            <button type="button" id="add-store" class="btn btn-primary " data-stores="{{ $stores }}" data-units="{{ $units }}" ><i class="fa fa-plus"></i> {{ translate('اضافة') }} </button>
+                                        </tfoot>
+                                    </div>
                                     
                                 </div>
                             </div>

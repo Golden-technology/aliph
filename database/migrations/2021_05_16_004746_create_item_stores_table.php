@@ -15,9 +15,11 @@ class CreateItemStoresTable extends Migration
     {
         Schema::create('item_stores', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('item_unit_id')->constrained('itemUnits');
+            $table->foreignId('item_unit_id')->constrained('item_units');
             $table->foreignId('store_id')->constrained('stores');
             $table->integer('quantity');
+            $table->double('price_sale')->nullable();
+            $table->double('price_purchase')->nullable();
             $table->timestamps();
         });
     }

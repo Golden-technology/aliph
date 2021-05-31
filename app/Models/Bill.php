@@ -16,11 +16,13 @@ class Bill extends Model
      */
     protected $fillable = [
         'vendor_id',
+        'store_id',
         'status',
         'currency',
         'total',
         'vendor_condition',
         'condition',
+        'tax',
     ];
 
     public function vendor()
@@ -30,6 +32,6 @@ class Bill extends Model
 
     public function items()
     {
-        return $this->belongsTo(BillItem::class);
+        return $this->hasMany(BillItem::class);
     }
 }

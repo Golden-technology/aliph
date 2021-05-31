@@ -18,6 +18,8 @@ class ItemStore extends Model
         'item_unit_id',
         'store_id',
         'quantity',
+        'price_sale',
+        'price_purchase',
     ];
 
 

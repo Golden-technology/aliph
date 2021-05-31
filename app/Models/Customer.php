@@ -25,4 +25,9 @@ class Customer extends Model
         'mobile',
         'website'
     ];
+
+    public function initials()
+    {
+        return $this->hasMany(InitialInvoice::class);
+    }
 }

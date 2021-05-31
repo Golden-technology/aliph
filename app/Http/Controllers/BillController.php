@@ -8,11 +8,12 @@ use App\Models\Item;
 use App\Models\Unit;
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use App\Models\InitialInvoice;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreInitialInvoice;
+use App\Http\Requests\StoreBill;
+use App\Models\BillItem;
 use App\Models\ItemStore;
+use App\Models\ItemUnit;
 use App\Models\Store;
 use App\Models\Vendor;
 
@@ -52,22 +53,38 @@ class BillController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         return DB::transaction(function () use($request) {
             $bill = Bill::create($request->all());
-    
+
             if($request->items) {
                 for ($i=0; $i < count($request->items); $i++) { 
-                    $item_store_id = ItemStore::where()->get();
+
+                    $item_unit = ItemUnit::where('item_id', $request->items[$i])->where('unit_id', $request->units[$i])->first();
+                    
+                    $item_store = ItemStore::where('item_unit_id', $item_unit->id ?? null)->where('store_id', $request->store_id)->first();
+                    
+                    if($item_store) {
+                        $item_store->update([
+                            'quantity' => $item_store->quantity + $request->quantity[$i] 
+                        ]);
+                    }else {
+                        $item_store = ItemStore::create([
+                            'item_unit_id' => $item_unit->id,
+                            'store_id' => $request->store_id,
+                            'quantity' =>  $request->quantity[$i],
+                            'price_sale' =>  $request->price[$i],
+                        ]);
+                    }
+
                     $bill->items()->create([
-                        'item_store_id'     => $request->item_store[$i],
-                        'item_id'           => $request->items[$i],
-                        'unit_id'           => $request->units[$i],
-                        'quantity'          => $request->quantity[$i],
-                        'total'             => $request->quantity[$i] * $request->price[$i],
-                        'price'             => $request->price[$i],
-                        'tax'               => $request->tax[$i],
-                        'discount'          => $request->discount[$i] ?? 0,
+                        // 'bill_id'       => $bill->id,
+                        'item_store_id' => $item_store->id,
+                        'quantity'      => $request->quantity[$i],
+                        'price'         => $request->price[$i],
+                        'total'         => $request->price[$i] * $request->quantity[$i],
+                        'tax'           => $request->taxes[$i],
+                        'discount'      => $request->discounts[$i] ?? 0 ,
                     ]);
                 }
             }
@@ -76,51 +93,119 @@ class BillController extends Controller
                 'total' => $bill->items->sum('total')
             ]);
     
-            return back()->with('success', translate('تمت العملية بنجاح'));
+            return redirect()->route('bills.show', $bill->id)->with('success', translate('تمت العملية بنجاح'));
         });
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\InitialInvoice  $initialInvoice
+     * @param  \App\Models\Bill  $Bill
      * @return \Illuminate\Http\Response
      */
-    public function show(InitialInvoice $initial)
+    public function show(Bill $bill)
     {
-        return view('dashboard.initials.show', compact('initial'));
+        return view('dashboard.bills.show', compact('bill'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\InitialInvoice  $initialInvoice
+     * @param  \App\Models\Bill  $Bill
      * @return \Illuminate\Http\Response
      */
-    public function edit(InitialInvoice $initialInvoice)
+    public function edit(Bill $bill)
     {
-        //
+        $vendors = Vendor::all();
+        $stores = Store::all();
+        $taxes = Tax::all();
+        $items = Item::all();
+        $units = Unit::all();
+        return view('dashboard.bills.edit', compact('bill', 'vendors', 'stores', 'taxes', 'items', 'units'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\InitialInvoice  $initialInvoice
+     * @param  \App\Models\Bill  $Bill
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, InitialInvoice $initialInvoice)
+    public function update(Request $request, Bill $bill)
     {
-        //
+        // dd($request->all());
+
+        return DB::transaction(function () use($request , $bill) {
+            $bill->update($request->all());
+
+            
+
+            if($request->items) {
+                
+                for ($i=0; $i < count($request->items); $i++) { 
+                    $item_unit = ItemUnit::where('item_id', $request->items[$i])->where('unit_id', $request->units[$i])->first();
+                    
+                    $item_store = ItemStore::where('item_unit_id', $item_unit->id ?? null)->where('store_id', $request->store_id)->first();
+                    
+
+                    if($item_store) {
+                        if($bill->items[$i]['quantity'] > $request->quantity[$i]) {
+                            $item_store->update([
+                                'quantity' => $item_store->quantity - ($bill->items[$i]['quantity'] - $request->quantity[$i]) 
+                            ]);
+                        }else {
+                            $item_store->update([
+                                'quantity' => $item_store->quantity + ($request->quantity[$i] - $bill->items[$i]['quantity']) 
+                            ]);
+                        }
+                    }else {
+                        $item_store = ItemStore::create([
+                            'item_unit_id' => $item_unit->id,
+                            'store_id' => $request->store_id,
+                            'quantity' =>  $request->quantity[$i],
+                            'price_sale' =>  $request->price[$i],
+                        ]);
+                    }
+
+                    if(isset($bill->items[$i])) {
+                        $bill->items[$i]->update([
+                            // 'bill_id'       => $bill->id,
+                            'item_store_id' => $item_store->id,
+                            'quantity'      => $request->quantity[$i],
+                            'price'         => $request->price[$i],
+                            'total'         => $request->price[$i] * $request->quantity[$i],
+                            'tax'           => $request->taxes[$i],
+                            'discount'      => $request->discounts[$i] ?? 0 ,
+                        ]);
+                    }else {
+                        $bill->items()->create([
+                            // 'bill_id'       => $bill->id,
+                            'item_store_id' => $item_store->id,
+                            'quantity'      => $request->quantity[$i],
+                            'price'         => $request->price[$i],
+                            'total'         => $request->price[$i] * $request->quantity[$i],
+                            'tax'           => $request->taxes[$i],
+                            'discount'      => $request->discounts[$i] ?? 0 ,
+                        ]);
+                    }
+                }
+            }
+
+            $bill->update([
+                'total' => $bill->items->sum('total')
+            ]);
+    
+            return redirect()->route('bills.show', $bill->id)->with('success', translate('تمت العملية بنجاح'));
+        });
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\InitialInvoice  $initialInvoice
+     * @param  \App\Models\Bill  $Bill
      * @return \Illuminate\Http\Response
      */
-    public function destroy(InitialInvoice $initialInvoice)
+    public function destroy(Bill $bill)
     {
         //
     }

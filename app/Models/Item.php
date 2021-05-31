@@ -17,6 +17,7 @@ class Item extends Model
     protected $fillable = [
         'name',
         'is_service',
+        'barcode',
         'price_sale',
         'price_purchase',
         'tax_id',
@@ -71,6 +72,8 @@ class Item extends Model
     {
         return $this->hasMany(ItemStore::class);
     }
+
+    
 
 
 }

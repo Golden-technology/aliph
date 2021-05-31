@@ -55,10 +55,19 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        $headers = json_decode(json_encode([['name' => 'content' , 'active' => true] , ['name' => 'phone' , 'active' => true]]) );
+        $headers = json_decode(
+            json_encode([
+                ['name' => translate('التفاصيل') , 'active' => true],
+                ['name' => translate('العروض') , 'active' => false],
+                ['name' => translate('الفواتير') , 'active' => false],
+                ['name' => translate('الدفعات') , 'active' => false],
+                ['name' => translate('المصروفات') , 'active' => false],
+            ]));
         $contents = [
-            'content'   => ['active' => true, 'name' => 'content'], 
-            'phone'     => ['active' => false, 'name' => 'phone']
+            'content'       => ['active' => true, 'name' => translate('التفاصيل')],
+            'initial'       => ['active' => false, 'name' => translate('العروض')],
+            'invoice'       => ['active' => false, 'name' => translate('الدفعات')],
+            'expences'       => ['active' => false, 'name' => translate('الصروفات')],
         ];
         
         return view('dashboard.customers.show', compact('customer', 'headers', 'contents'));

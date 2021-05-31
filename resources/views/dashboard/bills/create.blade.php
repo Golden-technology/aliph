@@ -111,16 +111,33 @@
 @push('js')
 
 <script>
+
+        async function seandRequest(url , method = 'GET' , result = null) {
+            let data = await fetch(url)
+            return await data.json();
+        }
+
+        async function getUnits(id) {
+            $('select#units').html(`<option disabled selected value="">{{ translate('اختار الوحدة') }}</option>`)
+            units = await seandRequest("{{ url('item/units') }}" + '/' + id , 'GET')
+            units.forEach(unit => {
+                let option = `<option value="`+ unit.unit.id +`">`+ unit.unit.name +`</option>`
+                $('select#units').append(option);
+            });
+        }
+
     $(function () {
         let count = 0
         $('#add-item').click(function () {
             count++
-
+            $('select#items').removeAttr('onchange');
+            $('select#items').removeAttr('id');
+            $('select#units').removeAttr('id');
             row = `
                 <tr>
                     <td>`+ count +`</td>
                     <td>
-                        <select class="form-control" name="items[]">
+                        <select id="items" onchange="getUnits(this.value)" class="form-control" name="items[]">
                             <option disabled selected value="">{{ translate('اختار المنتج') }}</option>
                             @foreach($items as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -128,11 +145,8 @@
                         </select>
                     </td>
                     <td>
-                        <select class="form-control" name="units[]">
+                        <select id="units" class="form-control" name="units[]">
                             <option disabled selected value="">{{ translate('اختار الوحدة') }}</option>
-                            @foreach($units as $unit)
-                                <option value="{{ $unit->id }}">{{ $unit->name }}</option>
-                            @endforeach
                         </select>
                     </td>
                     <td>

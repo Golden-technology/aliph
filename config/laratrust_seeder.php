@@ -24,6 +24,7 @@ return [
             'items'         => 'c,r,u,d',
             'initials'      => 'c,r,u,d',
             'bills'         => 'c,r,u,d',
+            'invoices'         => 'c,r,u,d',
             'dashboard'     => 'r',
         ],
     ],

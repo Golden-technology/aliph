@@ -29,6 +29,13 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label">{{ translate(' الباركود') }} :</label>
+                                            <input type="text" class="form-control" name="barcode" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">{{ translate('القسم') }} :</label>
                                             <select class="form-control" name="category_id">
                                                 <option value="">{{ translate('اختار القسم') }}</option>
@@ -39,7 +46,7 @@
                                         </div>
                                     </div>
     
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="col-form-label">{{ translate('سعر الشراء') }} :</label>
                                             <input type="number" class="form-control" name="price_sale" step="0.1">
@@ -51,9 +58,9 @@
                                             <label class="col-form-label">{{ translate('سعر البيع') }} :</label>
                                             <input type="number" class="form-control" name="price_purchase" step="0.1">
                                         </div>
-                                    </div>
+                                    </div> --}}
     
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">{{ translate('المورد') }} :</label>
                                             <select class="form-control" name="vendor_id">
@@ -62,9 +69,9 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">{{ translate('الضريبة') }} :</label>
                                             <select class="form-control" name="tax_id">
@@ -73,13 +80,13 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="recipient-name" class="col-form-label">{{ translate('الوحدات') }} :</label>
-                                            <select class="form-control" name="units[]" multiple>
+                                            <label for="units" class="col-form-label">{{ translate('الوحدات') }} :</label>
+                                            <select class="form-control" id="units" name="units[]" multiple>
                                                 @foreach ($units as $unit)
                                                     <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                                                 @endforeach

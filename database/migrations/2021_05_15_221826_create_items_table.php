@@ -16,9 +16,8 @@ class CreateItemsTable extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('barcode')->nullable();
             $table->tinyInteger('is_service')->default(0);
-            $table->double('price_sale')->nullable();
-            $table->double('price_purchase')->nullable();
             $table->string('currency')->nullable();
             $table->foreignId('tax_id')->nullable()->constrained('taxes');
             $table->string('image')->nullable();
