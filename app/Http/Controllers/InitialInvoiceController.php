@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Tax;
 use App\Models\Item;
 use App\Models\Unit;
+use App\Models\Store;
 use App\Models\Customer;
+use App\Models\ItemUnit;
+use App\Models\ItemStore;
 use Illuminate\Http\Request;
 use App\Models\InitialInvoice;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInitialInvoice;
 
 class InitialInvoiceController extends Controller
@@ -33,9 +37,8 @@ class InitialInvoiceController extends Controller
     {
         $customers = Customer::all();
         $taxes = Tax::all();
-        $items = Item::all();
-        $units = Unit::all();
-        return view('dashboard.initials.create', compact('customers', 'taxes', 'items', 'units'));
+        $stores = Store::all();
+        return view('dashboard.initials.create', compact('customers', 'taxes', 'stores'));
     }
 
     /**
@@ -44,24 +47,35 @@ class InitialInvoiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreInitialInvoice $request)
+    public function store(Request $request)
     {
         // dd($request->all());
         return DB::transaction(function () use($request) {
-            $initial = InitialInvoice::create($request->validated());
-    
+            $initial = InitialInvoice::create($request->all());
+
             if($request->items) {
                 for ($i=0; $i < count($request->items); $i++) { 
-                    $initial->items()->create([
-                        // 'item_store_id'     => $request->item_store[$i],
-                        'item_id'           => $request->items[$i],
-                        'unit_id'           => $request->units[$i],
-                        'quantity'          => $request->quantity[$i],
-                        'total'             => $request->quantity[$i] * $request->price[$i],
-                        'price'             => $request->price[$i],
-                        'tax'               => $request->tax[$i],
-                        'discount'          => $request->discount[$i] ?? 0,
-                    ]);
+
+                    $item_unit = ItemUnit::where('item_id', $request->items[$i])->where('unit_id', $request->units[$i])->first();
+                    $item_store = ItemStore::where('item_unit_id', $item_unit->id ?? null)->where('store_id', $request->store_id)->first();
+                    
+                    if($item_store) {
+                        if($item_store->quantity >= $request->quantity[$i]) {
+                            $initial->items()->create([
+                                // 'bill_id'       => $bill->id,
+                                'item_store_id' => $item_store->id,
+                                'quantity'      => $request->quantity[$i],
+                                'price'         => $request->price[$i],
+                                'total'         => $request->price[$i] * $request->quantity[$i],
+                                'tax'           => $request->taxes[$i],
+                                'discount'      => $request->discounts[$i] ?? 0 ,
+                            ]);
+                        }
+
+                        
+                    }else {
+                        continue;
+                    }
                 }
             }
 
@@ -69,7 +83,7 @@ class InitialInvoiceController extends Controller
                 'total' => $initial->items->sum('total')
             ]);
     
-            return back()->with('success', translate('تمت العملية بنجاح'));
+            return redirect()->route('inti$initials.show' , $initial->id)->with('success', translate('تمت العملية بنجاح'));
         });
     }
 

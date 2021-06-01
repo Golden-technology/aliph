@@ -16,9 +16,7 @@ class CreateInitialInvoiceItemsTable extends Migration
         Schema::create('initial_invoice_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('initial_invoice_id')->constrained('initial_invoices');
-            // $table->foreignId('item_store_id')->constrained('item_stores');
-            $table->foreignId('item_id')->constrained('items');
-            $table->foreignId('unit_id')->constrained('units');
+            $table->foreignId('item_store_id')->constrained('item_stores');
             $table->integer('quantity')->nullable();
             $table->double('price')->nullable();
             $table->double('total')->nullable();

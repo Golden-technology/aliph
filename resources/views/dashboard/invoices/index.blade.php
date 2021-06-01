@@ -39,7 +39,7 @@
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $invoice->customer->name }}</td>
-                                    <td>{{ $invoice->total }}</td>
+                                    <td>{{ number_format($invoice->total , 2) }}</td>
                                     <td>{{ translate($invoice->status) }}</td>
                                     <td>{{ $invoice->created_at->format('Y-m-d') }}</td>
                                     <td>

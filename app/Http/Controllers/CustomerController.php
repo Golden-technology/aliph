@@ -60,14 +60,14 @@ class CustomerController extends Controller
                 ['name' => translate('التفاصيل') , 'active' => true],
                 ['name' => translate('العروض') , 'active' => false],
                 ['name' => translate('الفواتير') , 'active' => false],
-                ['name' => translate('الدفعات') , 'active' => false],
-                ['name' => translate('المصروفات') , 'active' => false],
+                // ['name' => translate('الدفعات') , 'active' => false],
+                // ['name' => translate('المصروفات') , 'active' => false],
             ]));
         $contents = [
             'content'       => ['active' => true, 'name' => translate('التفاصيل')],
             'initial'       => ['active' => false, 'name' => translate('العروض')],
-            'invoice'       => ['active' => false, 'name' => translate('الدفعات')],
-            'expences'       => ['active' => false, 'name' => translate('الصروفات')],
+            'invoices'      => ['active' => false, 'name' => translate('الفواتير')],
+            // 'expences'      => ['active' => false, 'name' => translate('الصروفات')],
         ];
         
         return view('dashboard.customers.show', compact('customer', 'headers', 'contents'));
