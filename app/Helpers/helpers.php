@@ -42,7 +42,7 @@ if (!function_exists('translate')) {
             // $content .= "];";
 
 
-            file_put_contents($path, $contents);
+            //file_put_contents($path, $contents);
 
             return $translate_value;
 

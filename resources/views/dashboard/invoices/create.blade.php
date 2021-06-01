@@ -8,10 +8,9 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
-            <form action="{{ route('initials.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('invoices.store') }}" method="POST" enctype="multipart/form-data">
                 <div class="card-header">
-                    <h3>{{ translate('اضافة فاتورة مبيعات') }}
-                    </h3>
+                    <h3>{{ translate('اضافة فاتورة مبيعات') }}</h3>
                 </div>
                 <div class="card-body">
                     <div>
@@ -164,54 +163,71 @@
 
         async function getItems(id) {
             items = await seandRequest("{{ url('store/items') }}" + '/' + id , 'GET')
+            $('.items').html(`<option disabled selected value="">{{ translate('اختار المنتج') }}</option>`);
             items.forEach(item => {
-                // let option = `<option value="`+ item.id +`">`+ item.name +`</option>`
-                // $('select.items').append(option);
-                console.log(item)
+                let option = `<option value="`+ item.item_unit.item.id +`">`+ item.item_unit.item.name +`</option>`
+                $('.items').append(option);
+                // console.log(item.item_unit.item)
             });
         }
-            
+
+        async function getUnits(id) {
+            units = await seandRequest("{{ url('item/units') }}" + '/' + id , 'GET')
+            $('.units').html(`<option disabled selected value="">{{ translate('اختار الوحدة') }}</option>`);
+            units.forEach(unit => {
+                let option = `<option value="`+ unit.unit.id +`">`+ unit.unit.name +`</option>`
+                $('.units').append(option);
+            });
+        }
+
 
         $(function () {
             let count = 0
 
             $('#add-item').click(function () {
-                count++ 
+                if($('#store').val() == null) {
+                    alert('اختار المخزن')
+                }else {
+                    
+                    count++ 
 
-                $('select.items').removeClass('items');
+                    $('select.items').removeAttr('onchange');
+                    $('select.items').removeClass('items');
+                    $('select.units').removeClass('units');
 
-                row = `
-                <tr>
-                    <td>` + count + `</td>
-                    <td>
-                        <select class="form-control items" name="items[]">
-                            <option disabled selected value="">{{ translate('اختار المنتج') }}</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select class="form-control" name="units[]">
-                            <option disabled selected value="">{{ translate('اختار الوحدة') }}</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" name="quantity[]" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" name="price[]" />
-                    </td>
-                    <td>
-                        <select class="form-control" name="taxes[]">
-                            <option disabled selected value="">{{ translate('اختار الضريبة') }}</option>
-                            @foreach($taxes as $tax)
-                                <option value="{{ $tax->id }}">{{ $tax->value }}%</option>
-                            @endforeach
-                        </select>
-                    </td>
-                </tr>
-            `
-            $('#items tbody').append(row)
-            let store = $('#store').val()
-            getItems(store)
+                    row = `
+                    <tr>
+                        <td>` + count + `</td>
+                        <td>
+                            <select onchange="getUnits(this.value)" class="form-control items" name="items[]">
+                                <option disabled selected value="">{{ translate('اختار المنتج') }}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control units" name="units[]">
+                                <option disabled selected value="">{{ translate('اختار الوحدة') }}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="quantity[]" />
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="price[]" />
+                        </td>
+                        <td>
+                            <select class="form-control" name="taxes[]">
+                                <option disabled selected value="">{{ translate('اختار الضريبة') }}</option>
+                                @foreach($taxes as $tax)
+                                    <option value="{{ $tax->id }}">{{ $tax->value }}%</option>
+                                @endforeach
+                            </select>
+                        </td>
+                    </tr>
+                `
+                $('#items tbody').append(row)
+                getItems($('#store').val())
+            }
+            // getItems(store)
 
             })
 

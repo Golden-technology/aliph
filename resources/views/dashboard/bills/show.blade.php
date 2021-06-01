@@ -19,7 +19,7 @@
                                 <th>{{ translate('المورد') }}</th>
                                 <td>{{ $bill->vendor->name }}</td>
                                 <th>{{ translate('المبلغ') }}</th>
-                                <td>{{ $bill->total }}</td>
+                                <td>{{ number_format($bill->total , 2) }}</td>
                                 <th>{{ translate('الحالة') }}</th>
                                 <td>{{ $bill->status }}</td>
                                 <th>{{ translate('تاريخ الانشاء') }}</th>
@@ -39,6 +39,7 @@
                                     <th>{{ translate('الكمية') }}</th>
                                     <th>{{ translate('السعر') }}</th>
                                     <th>{{ translate('الضريبة') }}</th>
+                                    <th>{{ translate('المجموع') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,9 +51,19 @@
                                         <td>{{ $item->quantity }}</td>
                                         <td>{{ $item->price }}</td>
                                         <td>{{ $item->tax }}%</td>
+                                        <td>{{ $item->price * $item->quantity }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
+                            <tr>
+                                <th>{{ translate('الاجمالى') }}</th>
+                                <th>{{ count($bill->items) }}</th>
+                                <th>{{ count($bill->items) }}</th>
+                                <th>{{ $bill->items->sum('quantity') }}</th>
+                                <th>{{ number_format($bill->items->sum('price') , 2) }}</th>
+                                <th>-</th>
+                                <th>{{ number_format($bill->items->sum('total') , 2) }}</th>
+                            </tr>
                         </table>
                     </div>
                     <div class="col-md-4">
