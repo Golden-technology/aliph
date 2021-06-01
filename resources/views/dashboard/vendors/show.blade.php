@@ -48,7 +48,7 @@
                                                 <tr>
                                                     <td>
                                                         <td class="border-top-0">{{translate('الإجمالي للفواتير	')}}</td>
-                                                        <td>0</td>
+                                                        <td>{{ number_format($vendor->bills->sum('total') , 2) }}</td>
                                                     </td>
                                                 </tr>
                                                 <tr>
