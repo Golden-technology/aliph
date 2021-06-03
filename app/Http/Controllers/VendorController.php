@@ -53,10 +53,14 @@ class VendorController extends Controller
      */
     public function show(Vendor $vendor)
     {
-        $headers = json_decode(json_encode([['name' => 'content' , 'active' => true] , ['name' => 'phone' , 'active' => true]]) );
+        $headers = json_decode(
+            json_encode([
+                ['name' => translate('التفاصيل') , 'active' => true] ,
+                ['name' => translate('الفواتير') , 'active' => true]
+            ]) );
         $contents = [
-            'content'   => ['active' => true, 'name' => 'content'], 
-            'phone'     => ['active' => false, 'name' => 'phone']
+            'content'   => ['active' => true, 'name' =>  translate('التفاصيل')], 
+            'bills'     => ['active' => false, 'name' => translate('الفواتير')]
         ];
         
         return view('dashboard.vendors.show', compact('vendor', 'headers', 'contents'));

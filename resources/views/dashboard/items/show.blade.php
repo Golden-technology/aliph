@@ -1,94 +1,95 @@
-@extends('dashboard.layouts.app')
+@extends('dashboard.layouts.master')
+
+@section('title')
+    {{ translate('عرض منتج') }}
+@endsection
 
 @section('content')
 <div class="row">
     <div class="col-sm-12">
-        <div class="white-box">
-            <div class="table-responsive">
-                <table class="table text-nowrap">
-                    <thead>
-                        <tr>
-                            <td>
-                                <th class="border-top-0">الاسم</th>
-                                <td>{{ $customer->name }}</td>
-                            </td>
-                            <td>
-                                <th class="border-top-0">رقم الهاتف</th>
-                                <td>{{ $customer->phone }}</td>
-                            </td>
-                            <td>
-                                <th class="border-top-0">العنوان</th>
-                                <td>{{ $customer->address }}</td>
-                            </td>
-                            <td>
-                                <th class="border-top-0">خيارات</th>
-                                <td>
-                                    @permission('customers-update')
-                                    <button 
-                                    class="btn btn-warning btn-sm update customer"
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#customerModal"
-                                    data-name="{{ $customer->name }}"
-                                    data-phone="{{ $customer->phone }}"
-                                    data-address="{{ $customer->address }}"
-                                    data-action="{{ route('customers.update', $customer->id) }}"
-                                    >
-                                        <i class="fa fa-edit"></i> 
-                                        تعديل
-                                    </button>
-                                    @endpermission
-                                </td>
-                            </td>
-                        </tr>
-                    </thead>
-                </table>
+        <div class="card">
+            <div class="card-header">
+                <h3>{{$item->name }}</h3>
             </div>
-        </div>
-
-        {{-- <div class="white-box">
-            <h3 class="box-title">قائمة المناديب</h3>
-            <div class="table-responsive">
-                <table class="table text-nowrap">
-                    <thead>
-                        <tr>
-                            <th class="border-top-0">#</th>
-                            <th class="border-top-0">الاسم</th>
-                            <th class="border-top-0">رقم الهاتف</th>
-                            <th class="border-top-0">العنوان</th>
-                            <th class="border-top-0">خيارات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($customer->delegates as $delegate)
+            <div class="card-body text-center">
+                <div class="row">
+                    <div class="col-md-10">
+                        <table class="table table-bordered">
                             <tr>
-                                <td>{{ $loop->index + 1 }}</td>
-                                <td>{{ $delegate->name }}</td>
-                                <td>{{ $delegate->phone }}</td>
-                                <td>{{ $delegate->address }}</td>
+                                <th>{{ translate('اسم المنتج') }}</th>
+                                <td>{{ $item->name }}</td>
+                                <th>{{ translate('القسم') }}</th>
+                                <td>{{ $item->category->name }}</td>
+                            </tr>
+                            <tr>
+                                {{-- <th>{{ translate('المورد') }}</th>
+                                <td>{{ $item->vendor->name }}</td> --}}
+                                <th>{{ translate('العملة') }}</th>
+                                <td>{{ $item->currency ?? '-' }}</td>
+                                <th>{{ translate('الوحدات') }}</th>
                                 <td>
-                                    <a href="{{ route('delegates.show', $delegate->id) }}" class="btn btn-info btn-sm text-white"><i class="fa fa-eye"></i> عرض</a>
-                                    
-                                    <button 
-                                    class="btn btn-warning btn-sm delegate"
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#delegateModal"
-                                    data-name="{{ $delegate->name }}"
-                                    data-address="{{ $delegate->address }}"
-                                    data-action="{{ route('delegates.update', $delegate->id) }}"
-                                    >
-                                        <i class="fa fa-edit"></i> 
-                                        تعديل
-                                    </button>
+                                    @foreach ($item->units as $unit)
+                                        | {{ $unit->unit->name }} 
+                                    @endforeach
                                 </td>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                            {{-- <tr>
+                                <th>{{ translate('سعر الشراء') }}</th>
+                                <td>{{ $item->price_sale }}</td>
+                                <th>{{ translate('سعر البيع') }}</th>
+                                <td>
+                                    {{ $item->price_purchase }}
+                                </td>
+                            </tr> --}}
+                            <tr>
+                                
+                                {{-- <th>{{ translate('الضريبة') }}</th>
+                                <td>
+                                    {{ $item->tax->value }}%
+                                </td> --}}
+                            </tr>
+                        </table>
+
+                        {{-- <hr>
+                        <br>
+                        <h3>{{ translate('الكميات و الوحدات') }}</h3>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{ translate('المخزن') }}</th>
+                                    <th>{{ translate('الوحدة') }}</th>
+                                    <th>{{ translate('الكمية') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($item->stores as $store)
+                                    <tr>
+                                        <td>{{ $loop->index + 1 }}</td>
+                                        <td>{{ $store->store->name }}</td>
+                                        <td>{{ $store->unit->name }}</td>
+                                        <td>{{ $store->quantity }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table> --}}
+                    </div>
+                    <div class="col-md-2">
+                        <img src="{{ asset($item->image) }}" alt="">
+                    </div>
+                </div>
+                
             </div>
-        </div> --}}
-
-
-        @include('dashboard.modals.customer')
+            <div class="card-footer">
+                @permission('items-update')
+                    <a href="{{ route('items.edit' , $item->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> {{ translate('تعديل') }}</a>
+                @endpermission
+            </div>
+        </div>
     </div>
 </div>
 @endsection
+
+@push('js')
+
+@endpush

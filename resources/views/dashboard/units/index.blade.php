@@ -13,7 +13,7 @@
                     {{ translate('قائمة الوحدات') }}
                     @permission('units-create')
                         <a 
-                        class="btn btn-primary btn-sm left unit"
+                        class="btn btn-primary float-left unit"
                         href="#"
                         data-toggle="modal" 
                         data-target="#unitModal"

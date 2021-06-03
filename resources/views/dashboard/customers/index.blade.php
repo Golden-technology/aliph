@@ -13,7 +13,7 @@
                     {{ translate('قائمة العملاء') }}
                     @permission('customers-create')
                     <a 
-                    class="btn btn-primary btn-sm left customer"
+                    class="btn btn-primary float-left customer"
                     href="{{ route('customers.create') }}"
                     >
                     <i class="fa fa-plus"> {{ translate('اضافة') }}</i>

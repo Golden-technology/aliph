@@ -25,4 +25,9 @@ class Vendor extends Model
         'mobile',
         'website'
     ];
+
+    public function bills()
+    {
+        return $this->hasMany(Bill::class);
+    }
 }
