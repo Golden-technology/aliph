@@ -15,6 +15,8 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InitialInvoiceController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentMethodController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,9 +32,7 @@ use App\Http\Controllers\InitialInvoiceController;
 
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', function () {
-        return view('dashboard.index');
-    });
+    Route::get('/', [HomeController::class , 'index']);
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('customers', CustomerController::class);
@@ -45,6 +45,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('initials', InitialInvoiceController::class);
     Route::resource('invoices', InvoiceController::class);
     Route::resource('bills', BillController::class);
+    Route::resource('methods', PaymentMethodController::class);
+    Route::resource('payments', PaymentController::class);
     Route::post('profile', [UserController::class, 'profile'])->name('profile');
 
 
