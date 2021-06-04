@@ -25,7 +25,7 @@ class StoreItemRequest extends FormRequest
     {
         return [
             'name'      => ['required' , 'string', 'unique:items'],
-            'image'     => ['nullable', 'image'],
+            'image'     => ['nullable'],
             'is_service' => ['nullable'],
             'price_sale' => ['nullable'],
             'price_purchase'=> ['nullable'],
