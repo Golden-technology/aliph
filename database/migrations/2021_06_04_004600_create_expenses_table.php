@@ -15,7 +15,6 @@ class CreateExpensesTable extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->id();
             $table->timestamps();
         });
     }
