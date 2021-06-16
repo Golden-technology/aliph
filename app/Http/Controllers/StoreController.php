@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ItemStore;
 use App\Models\Store;
 use Illuminate\Http\Request;
 
@@ -53,7 +54,7 @@ class StoreController extends Controller
      */
     public function show(Store $store)
     {
-        //
+        return view('dashboard.stores.show', compact('store'));
     }
 
     /**
@@ -94,5 +95,17 @@ class StoreController extends Controller
     public function destroy(Store $store)
     {
         //
+    }
+
+
+    public function updatePrices(Request $request)
+    {
+        foreach ($request->itemstore as $index => $item_store) {
+            $item_store = ItemStore::find($item_store)->first()->update([
+                'price_purchase' => $request->price_purchase[$index]
+            ]);
+        }
+
+        return back()->with('success', translate('تمت العملية بنجاح'));
     }
 }

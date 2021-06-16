@@ -16,7 +16,7 @@ class CreateBillItemsTable extends Migration
         Schema::create('bill_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('bill_id')->constrained('bills');
-            $table->foreignId('item_store_id')->constrained('item_stores');
+            $table->foreignId('item_id')->constrained('items');
             $table->integer('quantity')->nullable();
             $table->double('price')->nullable();
             $table->double('total')->nullable();

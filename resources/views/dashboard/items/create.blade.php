@@ -46,7 +46,7 @@
                                         </div>
                                     </div>
     
-                                    {{-- <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="col-form-label">{{ translate('سعر الشراء') }} :</label>
                                             <input type="number" class="form-control" name="price_sale" step="0.1">
@@ -58,9 +58,9 @@
                                             <label class="col-form-label">{{ translate('سعر البيع') }} :</label>
                                             <input type="number" class="form-control" name="price_purchase" step="0.1">
                                         </div>
-                                    </div> --}}
+                                    </div>
     
-                                    {{-- <div class="col-md-6">
+                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">{{ translate('المورد') }} :</label>
                                             <select class="form-control" name="vendor_id">
@@ -69,9 +69,9 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div> --}}
+                                    </div>
 
-                                    {{-- <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">{{ translate('الضريبة') }} :</label>
                                             <select class="form-control" name="tax_id">
@@ -80,15 +80,26 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div> --}}
+                                    </div>
 
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="units" class="col-form-label">{{ translate('الوحدات') }} :</label>
-                                            <select class="form-control" id="units" name="units[]" multiple>
+                                            <select class="form-control" id="units" name="unit_id" >
                                                 @foreach ($units as $unit)
                                                     <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="units" class="col-form-label">{{ translate('المخزن') }} :</label>
+                                            <select class="form-control" id="stores" name="store_id" >
+                                                @foreach ($stores as $store)
+                                                    <option value="{{ $store->id }}">{{ $store->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -105,7 +116,6 @@
                                         <input type="file" class="form-control d-none" id="image" name="image" >
                                     </label>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>

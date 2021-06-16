@@ -21,7 +21,11 @@ class CreateItemsTable extends Migration
             $table->string('currency')->nullable();
             $table->foreignId('tax_id')->nullable()->constrained('taxes');
             $table->string('image')->nullable();
+            $table->string('price_sale')->nullable();
+            $table->string('price_purchase')->nullable();
             $table->foreignId('vendor_id')->nullable()->references('id')->on('vendors');
+            $table->foreignId('store_id')->nullable()->references('id')->on('stores');
+            $table->foreignId('unit_id')->nullable()->references('id')->on('units');
             $table->foreignId('category_id')->nullable()->references('id')->on('categories');
             $table->timestamps();
         });

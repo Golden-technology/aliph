@@ -15,7 +15,7 @@ class ItemStore extends Model
      * @var array
      */
     protected $fillable = [
-        'item_unit_id',
+        'item_id',
         'store_id',
         'quantity',
         'price_sale',
@@ -24,9 +24,9 @@ class ItemStore extends Model
 
 
 
-    public function itemUnit()
+    public function item()
     {
-        return $this->belongsTo(ItemUnit::class, 'item_unit_id');
+        return $this->belongsTo(Item::class, 'item_id');
     }
 
     public function store()

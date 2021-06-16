@@ -75,7 +75,6 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>{{ translate('المنتج') }}</th>
-                                                    <th>{{ translate('الوحدة') }}</th>
                                                     <th>{{ translate('الكمية') }}</th>
                                                     <th>{{ translate('السعر') }}</th>
                                                     <th>{{ translate('الضريبة') }}</th>
@@ -137,16 +136,11 @@
                 <tr>
                     <td>`+ count +`</td>
                     <td>
-                        <select id="items" onchange="getUnits(this.value)" class="form-control" name="items[]">
+                        <select id="items" onchange="getUnits(this.value)" class="custom-select" name="items[]">
                             <option disabled selected value="">{{ translate('اختار المنتج') }}</option>
                             @foreach($items as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select id="units" class="form-control" name="units[]">
-                            <option disabled selected value="">{{ translate('اختار الوحدة') }}</option>
                         </select>
                     </td>
                     <td>
@@ -156,7 +150,7 @@
                         <input type="number" class="form-control" name="price[]" />
                     </td>
                     <td>
-                        <select class="form-control" name="taxes[]">
+                        <select class="custom-select" name="taxes[]">
                             <option disabled selected value="">{{ translate('اختار الضريبة') }}</option>
                             @foreach($taxes as $tax)
                                 <option value="{{ $tax->id }}">{{ $tax->value }}%</option>

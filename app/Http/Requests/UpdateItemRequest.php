@@ -25,17 +25,17 @@ class UpdateItemRequest extends FormRequest
     {
         return [
             'name'      => ['required' , 'string'],
-            'image'     => ['nullable', 'image'],
+            'image'     => ['nullable'],
             'is_service' => ['nullable'],
             'price_sale' => ['nullable'],
             'price_purchase'=> ['nullable'],
-            'tax_id'                => ['nullable'],
+            'tax_id' => ['nullable'],
             'vendor_id' => ['nullable'],
             'category_id' => ['nullable'],
-            'units' => ['nullable'],
-            'stores' => ['nullable'],
+            'store_id' => ['nullable'],
+            'unit_id' => ['nullable'],
             'currency' => ['nullable'],
-            // 'currency'  => ['required' , 'string'],
+            'units'  => ['nullable' , 'array'],
         ];
     }
 }

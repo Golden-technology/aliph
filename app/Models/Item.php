@@ -25,6 +25,8 @@ class Item extends Model
         'vendor_id',
         'category_id',
         'currency',
+        'unit_id',
+        'store_id',
     ];
 
     public function vendor()
@@ -42,11 +44,17 @@ class Item extends Model
         return $this->belongsTo(Tax::class, 'tax_id');
     }
 
-    public function units()
+    public function unit()
     {
-        return $this->hasMany(ItemUnit::class);
+        return $this->belongsTo(Unit::class, 'unit_id');
     }
 
+    public function store()
+    {
+        return $this->belongsTo(Store::class, 'store_id');
+    }
+
+    
 
     public function setImageAttribute($value)
     {

@@ -39,6 +39,9 @@
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $store->name }}</td>
                                     <td>
+                                        @permission('stores-read')
+                                            <a href="{{ route('stores.show' , $store->id) }}" class="btn btn-info btn-sm text-white" ><i class="fa fa-eye"></i> {{ translate('عرض') }}</a>
+                                        @endpermission
                                         @permission('stores-update')
                                             <button href="#" class="btn btn-warning btn-sm text-white update store" data-toggle="modal" data-target="#storeModal" data-action="{{ route('stores.update', $store->id) }}" data-name="{{ $store->name }}"><i class="fa fa-edit"></i> {{ translate('تعديل') }}</button>
                                         @endpermission

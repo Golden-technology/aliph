@@ -9,7 +9,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h3>{{$item->name }}</h3>
+                <h3>{{ translate('المعرف ') }} : {{$item->id }}</h3>
             </div>
             <div class="card-body text-center">
                 <div class="row">
@@ -22,31 +22,34 @@
                                 <td>{{ $item->category->name }}</td>
                             </tr>
                             <tr>
-                                {{-- <th>{{ translate('المورد') }}</th>
-                                <td>{{ $item->vendor->name }}</td> --}}
+                                <th>{{ translate('المورد') }}</th>
+                                <td>{{ $item->vendor->name }}</td>
                                 <th>{{ translate('العملة') }}</th>
                                 <td>{{ $item->currency ?? '-' }}</td>
-                                <th>{{ translate('الوحدات') }}</th>
-                                <td>
-                                    @foreach ($item->units as $unit)
-                                        | {{ $unit->unit->name }} 
-                                    @endforeach
-                                </td>
                             </tr>
-                            {{-- <tr>
+                            <tr>
                                 <th>{{ translate('سعر الشراء') }}</th>
                                 <td>{{ $item->price_sale }}</td>
                                 <th>{{ translate('سعر البيع') }}</th>
                                 <td>
                                     {{ $item->price_purchase }}
                                 </td>
-                            </tr> --}}
+                            </tr>
                             <tr>
-                                
-                                {{-- <th>{{ translate('الضريبة') }}</th>
+                                <th>{{ translate('الوحدات') }}</th>
+                                <td>
+                                    {{ $item->unit->name }} 
+                                </td>
+                                <th>{{ translate('الضريبة') }}</th>
                                 <td>
                                     {{ $item->tax->value }}%
-                                </td> --}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{{ translate('المخزن') }}</th>
+                                <td colspan="3">
+                                    {{ $item->store->name ?? '' }} 
+                                </td>
                             </tr>
                         </table>
 

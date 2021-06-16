@@ -35,7 +35,6 @@
                                 <tr>
                                     <th>#</th>
                                     <th>{{ translate('المنتج') }}</th>
-                                    <th>{{ translate('الوحدة') }}</th>
                                     <th>{{ translate('الكمية') }}</th>
                                     <th>{{ translate('السعر') }}</th>
                                     <th>{{ translate('الضريبة') }}</th>
@@ -46,8 +45,7 @@
                                 @foreach ($bill->items as $item)
                                     <tr>
                                         <td>{{ $loop->index + 1 }}</td>
-                                        <td>{{ $item->itemStore->itemUnit->item->name }}</td>
-                                        <td>{{ $item->itemStore->itemUnit->unit->name }}</td>
+                                        <td>{{ $item->itemStore->item->name }}</td>
                                         <td>{{ $item->quantity }}</td>
                                         <td>{{ $item->price }}</td>
                                         <td>{{ $item->tax }}%</td>
@@ -57,7 +55,6 @@
                             </tbody>
                             <tr>
                                 <th>{{ translate('الاجمالى') }}</th>
-                                <th>{{ count($bill->items) }}</th>
                                 <th>{{ count($bill->items) }}</th>
                                 <th>{{ $bill->items->sum('quantity') }}</th>
                                 <th>{{ number_format($bill->items->sum('price') , 2) }}</th>

@@ -14,13 +14,13 @@
             </div>
             <div class="card-body">
                 <div>
-                    <table class="table border-bottom border-top">
+                    <table class="table table-bordred">
                         <thead class="bg-white">
                             <tr>
                                 <td>
-                                    <td class="border-top-0">{{translate('الاسم')}}</td>
+                                    <td class="">{{translate('الاسم')}}</td>
                                     <td>{{ $store->name }}</td>
-                                    <td class="border-top-0">{{translate('عدد المنتجات')}}</td>
+                                    <td class="">{{translate('عدد المنتجات')}}</td>
                                     <td>0</td>
                                 </td>
                             </tr>
@@ -160,13 +160,13 @@
             </div>
         </div>
         <div class="card">
-            <form action="{{ route('item.price') }}" method="post">
+            <form action="{{ route('prices.update') }}" method="post">
                 @csrf
                 @method('PUT')
                 <div class="card-header">
                     <h4>
                         {{ translate(' المنتجات') }} 
-                        <button type="submit" class="btn btn-primary float-left"><i class="fa fa-save"></i> {{ translate('حفظ') }}</button>
+                        <button type="submit" class="btn btn-primary float-left"><i class="fa fa-save"></i> {{ translate('حفظ الاسعار') }}</button>
                     </h4>
                 </div>
                 <div class="card-body">
@@ -175,7 +175,6 @@
                             <tr>
                                 <th>#</th>
                                 <th>{{ translate('الاسم') }}</th>
-                                <th>{{ translate('الوحدة') }}</th>
                                 <th>{{ translate('الكمية') }}</th>
                                 <th>{{ translate('سعر الشراء') }}</th>
                                 <th>{{ translate('سعر البيع') }}</th>
@@ -186,8 +185,7 @@
                                 <tr>
                                     <input type="hidden" name="itemstore[]" value="{{ $item->id }}">
                                     <td>{{ $loop->index + 1 }}</td>
-                                    <td>{{ $item->itemUnit->item->name }}</td>
-                                    <td>{{ $item->itemUnit->unit->name }}</td>
+                                    <td>{{ $item->item->name }}</td>
                                     <td>{{ $item->quantity }}</td>
                                     <td>{{ $item->price_sale }}</td>
                                     <td style="width: 16%"><input type="number" step="0.1" name="price_purchase[]" class="form-control" value="{{ $item->price_purchase ?? 0 }}"></td>

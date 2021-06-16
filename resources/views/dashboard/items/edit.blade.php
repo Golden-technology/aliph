@@ -47,7 +47,7 @@
                                         </div>
                                     </div>
     
-                                    {{-- <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="col-form-label">{{ translate('سعر الشراء') }} :</label>
                                             <input type="number" class="form-control" value="{{ $item->price_sale }}" name="price_sale" step="0.1">
@@ -59,9 +59,9 @@
                                             <label class="col-form-label">{{ translate('سعر البيع') }} :</label>
                                             <input type="number" class="form-control" value="{{ $item->price_purchase }}" name="price_purchase" step="0.1">
                                         </div>
-                                    </div> --}}
+                                    </div>
     
-                                    {{-- <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">{{ translate('المورد') }} :</label>
                                             <select class="form-control"  name="vendor_id">
@@ -70,9 +70,9 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div> --}}
+                                    </div>
 
-                                    {{-- <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">{{ translate('الضريبة') }} :</label>
                                             <select class="form-control"  name="tax_id">
@@ -81,22 +81,30 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div> --}}
+                                    </div>
 
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">{{ translate('الوحدة') }} :</label>
-                                            <select class="form-control" multiple  name="units[]">
+                                            <select class="form-control"  name="unit_id">
                                                 @foreach ($units as $unit)
-                                                    <option value="{{ $unit->id }}" {{ in_array($unit->id, $item->units->pluck('unit_id')->toArray()) ?  'selected' : '' }}>{{ $unit->name }}</option>
+                                                    <option value="{{ $unit->id }}" {{ $unit->id == $item->unit_id ?  'selected' : '' }}>{{ $unit->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
 
-
-                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="units" class="col-form-label">{{ translate('المخزن') }} :</label>
+                                            <select class="form-control" id="stores" name="store_id" >
+                                                @foreach ($stores as $store)
+                                                    <option value="{{ $store->id }}" {{ $store->id == $item->store_id ?  'selected' : '' }}>{{ $store->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4">

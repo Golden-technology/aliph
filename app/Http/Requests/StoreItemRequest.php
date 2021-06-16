@@ -32,6 +32,7 @@ class StoreItemRequest extends FormRequest
             'tax_id' => ['nullable'],
             'vendor_id' => ['nullable'],
             'category_id' => ['nullable'],
+            'store_id' => ['nullable'],
             'unit_id' => ['nullable'],
             'currency' => ['nullable'],
             'units'  => ['nullable' , 'array'],

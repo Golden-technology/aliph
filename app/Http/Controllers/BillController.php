@@ -59,33 +59,31 @@ class BillController extends Controller
 
             if($request->items) {
                 for ($i=0; $i < count($request->items); $i++) { 
-
-                    $item_unit = ItemUnit::where('item_id', $request->items[$i])->where('unit_id', $request->units[$i])->first();
-                    
-                    $item_store = ItemStore::where('item_unit_id', $item_unit->id ?? null)->where('store_id', $request->store_id)->first();
-                    
-                    if($item_store) {
-                        $item_store->update([
-                            'quantity' => $item_store->quantity + $request->quantity[$i] 
-                        ]);
-                    }else {
-                        $item_store = ItemStore::create([
-                            'item_unit_id' => $item_unit->id,
-                            'store_id' => $request->store_id,
-                            'quantity' =>  $request->quantity[$i],
-                            'price_sale' =>  $request->price[$i],
+                    if ($request->quantity[$i]) {
+                        $item_store = ItemStore::where('item_id', $request->items[$i] ?? null)->where('store_id', $request->store_id)->first();
+                        
+                        if($item_store) {
+                            $item_store->update([
+                                'quantity' => $item_store->quantity + $request->quantity[$i] 
+                            ]);
+                        }else {
+                            $item_store = ItemStore::create([
+                                'item_id' => $request->items[$i],
+                                'store_id' => $request->store_id,
+                                'quantity' =>  $request->quantity[$i],
+                                'price_sale' =>  $request->price[$i],
+                            ]);
+                        }
+    
+                        $bill->items()->create([
+                            'item_store_id' => $item_store->id,
+                            'quantity'      => $request->quantity[$i],
+                            'price'         => $request->price[$i],
+                            'total'         => $request->price[$i] * $request->quantity[$i],
+                            'tax'           => $request->taxes[$i],
+                            'discount'      => $request->discounts[$i] ?? 0 ,
                         ]);
                     }
-
-                    $bill->items()->create([
-                        // 'bill_id'       => $bill->id,
-                        'item_store_id' => $item_store->id,
-                        'quantity'      => $request->quantity[$i],
-                        'price'         => $request->price[$i],
-                        'total'         => $request->price[$i] * $request->quantity[$i],
-                        'tax'           => $request->taxes[$i],
-                        'discount'      => $request->discounts[$i] ?? 0 ,
-                    ]);
                 }
             }
 
@@ -133,7 +131,7 @@ class BillController extends Controller
      */
     public function update(Request $request, Bill $bill)
     {
-        // dd($request->all());
+        // dd($request->al÷l());
 
         return DB::transaction(function () use($request , $bill) {
             $bill->update($request->all());
@@ -143,53 +141,52 @@ class BillController extends Controller
             if($request->items) {
                 
                 for ($i=0; $i < count($request->items); $i++) { 
-                    $item_unit = ItemUnit::where('item_id', $request->items[$i])->where('unit_id', $request->units[$i])->first();
-                    
-                    $item_store = ItemStore::where('item_unit_id', $item_unit->id ?? null)->where('store_id', $request->store_id)->first();
-                    
-
-                    if($item_store) {
-                        if($bill->items[$i]['quantity'] > $request->quantity[$i]) {
-                            $item_store->update([
-                                'quantity' => $item_store->quantity - ($bill->items[$i]['quantity'] - $request->quantity[$i]) 
-                            ]);
+                    if ($request->quantity[$i] > 0) {
+                        $item_store = ItemStore::where('item_id', $request->items[$i] ?? null)->where('store_id', $request->store_id)->first();
+                        if($item_store) {
+                            if($bill->items[$i]['quantity'] > $request->quantity[$i]) {
+                                $item_store->update([
+                                    'quantity' => $item_store->quantity - ($bill->items[$i]['quantity'] - $request->quantity[$i]) 
+                                ]);
+                            }else {
+                                $item_store->update([
+                                    'quantity' => $item_store->quantity + ($request->quantity[$i] - $bill->items[$i]['quantity']) 
+                                ]);
+                            }
                         }else {
-                            $item_store->update([
-                                'quantity' => $item_store->quantity + ($request->quantity[$i] - $bill->items[$i]['quantity']) 
+                            $item_store = ItemStore::create([
+                                'item_id' => $request->items[$i],
+                                'store_id' => $request->store_id,
+                                'quantity' =>  $request->quantity[$i],
+                                'price_sale' =>  $request->price[$i],
                             ]);
                         }
-                    }else {
-                        $item_store = ItemStore::create([
-                            'item_unit_id' => $item_unit->id,
-                            'store_id' => $request->store_id,
-                            'quantity' =>  $request->quantity[$i],
-                            'price_sale' =>  $request->price[$i],
-                        ]);
-                    }
-
-                    if(isset($bill->items[$i])) {
-                        $bill->items[$i]->update([
-                            // 'bill_id'       => $bill->id,
-                            'item_store_id' => $item_store->id,
-                            'quantity'      => $request->quantity[$i],
-                            'price'         => $request->price[$i],
-                            'total'         => $request->price[$i] * $request->quantity[$i],
-                            'tax'           => $request->taxes[$i],
-                            'discount'      => $request->discounts[$i] ?? 0 ,
-                        ]);
-                    }else {
-                        $bill->items()->create([
-                            // 'bill_id'       => $bill->id,
-                            'item_store_id' => $item_store->id,
-                            'quantity'      => $request->quantity[$i],
-                            'price'         => $request->price[$i],
-                            'total'         => $request->price[$i] * $request->quantity[$i],
-                            'tax'           => $request->taxes[$i],
-                            'discount'      => $request->discounts[$i] ?? 0 ,
-                        ]);
+    
+                        if(isset($bill->items[$i])) {
+                            $bill->items[$i]->update([
+                                // 'bill_id'       => $bill->id,
+                                'item_store_id' => $item_store->id,
+                                'quantity'      => $request->quantity[$i],
+                                'price'         => $request->price[$i],
+                                'total'         => $request->price[$i] * $request->quantity[$i],
+                                'tax'           => $request->taxes[$i],
+                                'discount'      => $request->discounts[$i] ?? 0 ,
+                            ]);
+                        }else {
+                            $bill->items()->create([
+                                // 'bill_id'       => $bill->id,
+                                'item_store_id' => $item_store->id,
+                                'quantity'      => $request->quantity[$i],
+                                'price'         => $request->price[$i],
+                                'total'         => $request->price[$i] * $request->quantity[$i],
+                                'tax'           => $request->taxes[$i],
+                                'discount'      => $request->discounts[$i] ?? 0 ,
+                            ]);
+                        }
                     }
                 }
-            }
+                    }
+                    
 
             $bill->update([
                 'total' => $bill->items->sum('total')

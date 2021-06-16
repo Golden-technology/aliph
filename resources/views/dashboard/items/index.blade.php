@@ -23,14 +23,14 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table text-nowrap">
+                    <table class="table text-nowrap text-center">
                         <thead>
                             <tr>
                                 <th class="border-top-0">#</th>
-                                {{-- <th class="border-top-0">{{ translate('المخزن') }}</th> --}}
+                                <th class="border-top-0">{{ translate('المخزن') }}</th>
                                 <th class="border-top-0">{{ translate('اسم المنتج') }}</th>
                                 <th class="border-top-0">{{ translate('القسم') }}</th>
-                                {{-- <th class="border-top-0">{{ translate('السعر') }}</th> --}}
+                                <th class="border-top-0">{{ translate('السعر') }}</th>
                                 <th class="border-top-0">{{ translate('خيارات') }}</th>
                             </tr>
                         </thead>
@@ -38,9 +38,10 @@
                             @foreach ($items as $item)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
+                                    <td>{{ $item->store->name ?? '-' }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->category->name }}</td>
-                                    {{-- <td>{{ $item->price_purchase ?? 0 }}</td> --}}
+                                    <td>{{ $item->price_purchase ?? 0 }}</td>
                                     <td>
                                         @permission('items-read')
                                             <a href="{{ route('items.show' , $item->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> {{ translate('عرض') }}</a>

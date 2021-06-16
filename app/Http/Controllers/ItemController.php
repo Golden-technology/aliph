@@ -53,17 +53,8 @@ class ItemController extends Controller
     public function store(StoreItemRequest $request)
     {
         // dd($request->all());
-        return DB::transaction(function () use($request) {
-            $item = Item::create($request->validated());
-
-            foreach ($request->units as $unit) {
-                $item->units()->create([
-                    'unit_id' => $unit
-                ]);
-            }
-
-            return redirect()->route('items.show', $item->id)->with('success', translate('تمت العملية بنجاح'));
-        });
+        $item = Item::create($request->validated());
+        return redirect()->route('items.show', $item->id)->with('success', translate('تمت العملية بنجاح'));
     }
 
     /**
@@ -103,10 +94,8 @@ class ItemController extends Controller
     public function update(UpdateItemRequest $request, Item $item)
     {
         // dd($request->validated());
-        return DB::transaction(function () use($request, $item) {
-            $item->update($request->validated());
-            return redirect()->route('items.show', $item->id)->with('success', translate('تمت العملية بنجاح'));
-        });
+        $item->update($request->validated());
+        return redirect()->route('items.show', $item->id)->with('success', translate('تمت العملية بنجاح'));
     }
 
     /**
