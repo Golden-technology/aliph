@@ -110,8 +110,6 @@
                                                     <th>#</th>
                                                     <th>{{ translate('المنتج') }}
                                                     </th>
-                                                    <th>{{ translate('الوحدة') }}
-                                                    </th>
                                                     <th>{{ translate('الكمية') }}
                                                     </th>
                                                     <th>{{ translate('السعر') }}
@@ -125,15 +123,9 @@
                                                 <tr>
                                                     <td>{{ $loop->index + 1 }}</td>
                                                     <td>
-                                                        <select onchange="getUnits(this.value)" class="form-control items" name="items[]">
+                                                        <select class="form-control items" name="items[]">
                                                             <option disabled  value="">{{ translate('اختار المنتج') }}</option>
-                                                            <option selected value="{{ $item->itemStore->itemUnit->item->id }}">{{ $item->itemStore->itemUnit->item->name }}</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select class="form-control units" name="units[]">
-                                                            <option disabled selected value="">{{ translate('اختار الوحدة') }}</option>
-                                                            <option selected value="{{ $item->itemStore->itemUnit->unit->id }}">{{ $item->itemStore->itemUnit->unit->name }}</option>
+                                                            <option selected value="{{ $item->itemStore->item->id }}">{{ $item->itemStore->item->name }}</option>
                                                         </select>
                                                     </td>
                                                     <td>
@@ -195,16 +187,6 @@
             items.forEach(item => {
                 let option = `<option value="`+ item.item_unit.item.id +`">`+ item.item_unit.item.name +`</option>`
                 $('.items').append(option);
-                // console.log(item.item_unit.item)
-            });
-        }
-
-        async function getUnits(id) {
-            units = await seandRequest("{{ url('item/units') }}" + '/' + id , 'GET')
-            $('.units').html(`<option disabled selected value="">{{ translate('اختار الوحدة') }}</option>`);
-            units.forEach(unit => {
-                let option = `<option value="`+ unit.unit.id +`">`+ unit.unit.name +`</option>`
-                $('.units').append(option);
             });
         }
 
@@ -219,21 +201,12 @@
 
                     count++ 
 
-                    $('select.items').removeAttr('onchange');
-                    $('select.items').removeClass('items');
-                    $('select.units').removeClass('units');
-
                     row = `
                     <tr>
                         <td>` + count + `</td>
                         <td>
                             <select onchange="getUnits(this.value)" class="form-control items" name="items[]">
                                 <option disabled selected value="">{{ translate('اختار المنتج') }}</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="form-control units" name="units[]">
-                                <option disabled selected value="">{{ translate('اختار الوحدة') }}</option>
                             </select>
                         </td>
                         <td>
@@ -255,7 +228,6 @@
                 $('#items tbody').append(row)
                 getItems($('#store').val())
             }
-            // getItems(store)
 
             })
 

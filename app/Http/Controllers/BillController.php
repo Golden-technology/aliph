@@ -53,6 +53,9 @@ class BillController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'items' => ['required' ,  'array']
+        ]);
         // dd($request->all());
         return DB::transaction(function () use($request) {
             $bill = Bill::create($request->all());
@@ -131,7 +134,9 @@ class BillController extends Controller
      */
     public function update(Request $request, Bill $bill)
     {
-        // dd($request->al÷l());
+        $request->validate([
+            'items' => ['required' ,  'array']
+        ]);
 
         return DB::transaction(function () use($request , $bill) {
             $bill->update($request->all());

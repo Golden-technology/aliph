@@ -89,7 +89,7 @@
                                                             <select class="form-control" name="items[]">
                                                                 <option disabled  value="">{{ translate('اختار المنتج') }}</option>
                                                                 @foreach($items as $item)
-                                                                    <option value="{{ $item->id }}" {{ $item->id == $billItem->item->item_id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                                                    <option value="{{ $item->id }}" {{ $item->id == $billItem->item_id ? 'selected' : '' }}>{{ $item->name }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </td>

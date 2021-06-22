@@ -41,10 +41,10 @@ class HomeController extends Controller
     {
         $ids = collect();
         $items = ItemStore::where('store_id', $store)->get()->filter(function ($item) use($ids) {
-            if($ids->search($item->itemUnit->item->id)) {
+            if($ids->search($item->item->id)) {
                 return false;
             }else {
-                $ids->push($item->itemUnit->item->id);
+                $ids->push($item->item->id);
                 return true;
             }
         });

@@ -45,12 +45,6 @@
                                     {{ $item->tax->value }}%
                                 </td>
                             </tr>
-                            <tr>
-                                <th>{{ translate('المخزن') }}</th>
-                                <td colspan="3">
-                                    {{ $item->store->name ?? '' }} 
-                                </td>
-                            </tr>
                         </table>
 
                         {{-- <hr>
