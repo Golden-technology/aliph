@@ -16,7 +16,7 @@ class BillItem extends Model
      */
     protected $fillable = [
         'bill_id',
-        'item_store_id',
+        'item_id',
         'quantity',
         'price',
         'total',
@@ -24,8 +24,8 @@ class BillItem extends Model
         'discount',
     ];
 
-    public function itemStore()
+    public function item()
     {
-        return $this->belongsTo(ItemStore::class, 'item_store_id');
+        return $this->belongsTo(Item::class, 'item_id');
     }
 }

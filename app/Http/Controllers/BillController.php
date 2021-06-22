@@ -76,7 +76,7 @@ class BillController extends Controller
                         }
     
                         $bill->items()->create([
-                            'item_store_id' => $item_store->id,
+                            'item_id'       =>  $request->items[$i],
                             'quantity'      => $request->quantity[$i],
                             'price'         => $request->price[$i],
                             'total'         => $request->price[$i] * $request->quantity[$i],
@@ -165,7 +165,7 @@ class BillController extends Controller
                         if(isset($bill->items[$i])) {
                             $bill->items[$i]->update([
                                 // 'bill_id'       => $bill->id,
-                                'item_store_id' => $item_store->id,
+                                'item_id'       =>  $request->items[$i],
                                 'quantity'      => $request->quantity[$i],
                                 'price'         => $request->price[$i],
                                 'total'         => $request->price[$i] * $request->quantity[$i],
@@ -175,7 +175,7 @@ class BillController extends Controller
                         }else {
                             $bill->items()->create([
                                 // 'bill_id'       => $bill->id,
-                                'item_store_id' => $item_store->id,
+                                'item_id'       =>  $request->items[$i],
                                 'quantity'      => $request->quantity[$i],
                                 'price'         => $request->price[$i],
                                 'total'         => $request->price[$i] * $request->quantity[$i],
