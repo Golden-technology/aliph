@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.master')
+@extends('dashboard.layouts.master', ['modals' => ['vendor', 'tax'] ])
 
 @section('title')
     {{ translate('اضافة فاتورة مشتريات') }}
@@ -34,12 +34,22 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">{{ translate('المورد') }} :</label>
-                                            <select class="form-control"  name="vendor_id">
-                                                <option disabled selected value="">{{ translate('اختار المورد') }}</option>
-                                                @foreach ($vendors as $vendor)
-                                                    <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
-                                                @endforeach
-                                            </select>
+                                            <div class="input-group">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary vendor" type="button"
+                                                     data-toggle="modal" 
+                                                     data-target="#vendorModal"
+                                                    >
+                                                    +</button>
+                                                </div>
+                                                <select class="form-control"  name="vendor_id">
+                                                    <option disabled selected value="">{{ translate('اختار المورد') }}</option>
+                                                    @foreach ($vendors as $vendor)
+                                                        <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            
                                         </div>
                                     </div>
     
@@ -58,12 +68,22 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">{{ translate('الضريبة') }} :</label>
-                                            <select class="form-control" name="tax">
-                                                <option disabled selected value="">{{ translate('اختار الضريبة') }}</option>
-                                                @foreach ($taxes as $tax)
-                                                    <option value="{{ $tax->value }}">{{ $tax->value }}%</option>
-                                                @endforeach
-                                            </select>
+                                            <div class="input-group">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary tax" type="button"
+                                                     data-toggle="modal" 
+                                                     data-target="#taxModal"
+                                                    >
+                                                    +</button>
+                                                </div>
+                                                <select class="form-control" name="tax">
+                                                    <option disabled selected value="">{{ translate('اختار الضريبة') }}</option>
+                                                    @foreach ($taxes as $tax)
+                                                        <option value="{{ $tax->value }}">{{ $tax->value }}%</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            
                                         </div>
                                     </div>
 

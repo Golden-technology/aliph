@@ -42,7 +42,7 @@ class VendorController extends Controller
 
         $vendor = vendor::create($request->all());
 
-        return redirect()->route('vendors.show', $vendor->id)->with('success', translate('تمت العملية بنجاح'));
+        return url()->previous() == url('/') . '/vendors' ?  redirect()->route('vendors.show', $vendor->id)->with('success', translate('تمت العملية بنجاح')) : back()->with('success', translate('تمت العملية بنجاح')) ;
     }
 
     /**

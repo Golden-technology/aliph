@@ -44,7 +44,7 @@ class CustomerController extends Controller
 
         $customer = Customer::create($request->all());
 
-        return redirect()->route('customers.show', $customer->id)->with('success', translate('تمت العملية بنجاح'));
+        return url()->previous() == url('/') . '/customers' ?  redirect()->route('customers.show', $customer->id)->with('success', translate('تمت العملية بنجاح')) : back()->with('success', translate('تمت العملية بنجاح')) ;
     }
 
     /**
