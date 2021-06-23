@@ -6,6 +6,9 @@
 
 @section('content')
 <div class="row">
+    <div class="col-md-12">
+        <x-filter-component id="true" customers="true" date="true"></x-filter-component>
+    </div>
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">

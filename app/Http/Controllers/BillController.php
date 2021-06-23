@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Tax;
 use App\Models\Bill;
 use App\Models\Item;
 use App\Models\Unit;
-use App\Models\Customer;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreBill;
-use App\Models\BillItem;
-use App\Models\ItemStore;
-use App\Models\ItemUnit;
 use App\Models\Store;
 use App\Models\Vendor;
+use App\Models\BillItem;
+use App\Models\Customer;
+use App\Models\ItemUnit;
+use App\Models\ItemStore;
+use Illuminate\Http\Request;
+use App\Http\Requests\StoreBill;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class BillController extends Controller
 {
@@ -24,9 +25,15 @@ class BillController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $bills = Bill::paginate();
+        $from = $request->from ? Carbon::parse($request->from)->startOfDay() : now()->subDays(2)->startOfDay();
+        $to = $request->to ?  Carbon::parse($request->to)->endOfDay() : now()->endOfDay();
+
+        $bills = Bill::when($request->number , function ($q) use($request) { return $q->where('id' , $request->number); })
+        ->when($request->vendor && $request->vendor != "all" , function ($q) use($request) { return $q->where('vendor_id' , $request->vendor); } )
+        ->when($request->from || $request->to , function ($q) use($from , $to) { return $q->whereBetween('created_at' , [$from , $to]); } )
+        ->paginate();
         return view('dashboard.bills.index', compact('bills'));
     }
 
