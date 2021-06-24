@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.master')
+@extends('dashboard.layouts.master', ['modals' => ['customer', 'store'] ])
 
 @section('title')
 {{ translate('اضافة فاتورة مبيعات') }}
@@ -19,13 +19,22 @@
                             <div class="col-md-10">
                                 <div class="row">
 
+                                
+
                                     <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="recipient-name"
+                                        <label for="recipient-name"
                                                 class="col-form-label">{{ translate('المخزن') }}
                                                 :</label>
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="submit"
+                                                 data-toggle="modal" 
+                                                 data-target="#storeModal"
+                                                >
+                                                +</button>
+                                            </div>
                                             <select id="store" class="form-control"
-                                                name="store_id">
+                                                name="store_id" onchange="getItems(this.value)">
                                                 <option disabled selected value="">
                                                     {{ translate('اختار المخزن') }}
                                                 </option>
@@ -34,6 +43,18 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        <!-- <div class="form-group">
+                                            
+                                            <select id="store" class="form-control"
+                                                name="store_id" onchange="getItems(this.value)">
+                                                <option disabled selected value="">
+                                                    {{ translate('اختار المخزن') }}
+                                                </option>
+                                                @foreach($stores as $store)
+                                                    <option value="{{ $store->id }}">{{ $store->name }} </option>
+                                                @endforeach
+                                            </select>
+                                        </div> -->
                                     </div>
 
                                     <div class="col-md-4">
@@ -49,37 +70,6 @@
                                                     <option value="{{ $customer->id }}">{{ $customer->name }}
                                                     </option>
                                                 @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label
-                                                class="col-form-label">{{ translate('الحالة') }}
-                                                :</label>
-                                            <select name="status" class="form-control">
-                                                <option disabled selected value="">
-                                                    {{ translate('اختار الحالة') }}
-                                                </option>
-                                                <option>
-                                                    {{ translate('مسودة') }}
-                                                </option>
-                                                <option>
-                                                    {{ translate('ارسلت') }}
-                                                </option>
-                                                <option>
-                                                    {{ translate('شوهدت') }}
-                                                </option>
-                                                <option>
-                                                    {{ translate('تمت الموافقة') }}
-                                                </option>
-                                                <option>
-                                                    {{ translate('مرفوضة') }}
-                                                </option>
-                                                <option>
-                                                    {{ translate('ملغاة') }}
-                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -108,8 +98,6 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>{{ translate('المنتج') }}
-                                                    </th>
-                                                    <th>{{ translate('الوحدة') }}
                                                     </th>
                                                     <th>{{ translate('الكمية') }}
                                                     </th>
@@ -165,20 +153,19 @@
             items = await seandRequest("{{ url('store/items') }}" + '/' + id , 'GET')
             $('.items').html(`<option disabled selected value="">{{ translate('اختار المنتج') }}</option>`);
             items.forEach(item => {
-                let option = `<option value="`+ item.item_unit.item.id +`">`+ item.item_unit.item.name +`</option>`
+                let option = `<option value="`+ item.item.id +`">`+ item.item.name +`</option>`
                 $('.items').append(option);
-                // console.log(item.item_unit.item)
             });
         }
 
-        async function getUnits(id) {
-            units = await seandRequest("{{ url('item/units') }}" + '/' + id , 'GET')
-            $('.units').html(`<option disabled selected value="">{{ translate('اختار الوحدة') }}</option>`);
-            units.forEach(unit => {
-                let option = `<option value="`+ unit.unit.id +`">`+ unit.unit.name +`</option>`
-                $('.units').append(option);
-            });
-        }
+        // async function getUnits(id) {
+        //     units = await seandRequest("{{ url('item/units') }}" + '/' + id , 'GET')
+        //     $('.units').html(`<option disabled selected value="">{{ translate('اختار الوحدة') }}</option>`);
+        //     units.forEach(unit => {
+        //         let option = `<option value="`+ unit.unit.id +`">`+ unit.unit.name +`</option>`
+        //         $('.units').append(option);
+        //     });
+        // }
 
 
         $(function () {
@@ -191,21 +178,16 @@
                     
                     count++ 
 
-                    $('select.items').removeAttr('onchange');
-                    $('select.items').removeClass('items');
-                    $('select.units').removeClass('units');
+                    // $('select.items').removeAttr('onchange');
+                    // $('select.items').removeClass('items');
+                    // $('select.units').removeClass('units');
 
                     row = `
                     <tr>
                         <td>` + count + `</td>
                         <td>
-                            <select onchange="getUnits(this.value)" class="form-control items" name="items[]">
+                            <select class="form-control items" name="items[]">
                                 <option disabled selected value="">{{ translate('اختار المنتج') }}</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="form-control units" name="units[]">
-                                <option disabled selected value="">{{ translate('اختار الوحدة') }}</option>
                             </select>
                         </td>
                         <td>

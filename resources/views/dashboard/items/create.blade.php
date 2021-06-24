@@ -94,7 +94,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="units" class="col-form-label">{{ translate('المخزن') }} :</label>
                                             <select class="form-control" id="stores" name="store_id" >
@@ -103,7 +103,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                 </div>
                             </div>

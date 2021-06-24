@@ -155,15 +155,6 @@
                         </svg>
                         <span class="side-menu__label">{{ translate('الفواتير') }}</span><i class="angle fe fe-chevron-down"></i></a>
                     <ul class="slide-menu">
-                            <li class="side-item side-item-category">{{ translate('فواتير المشتريات') }}</li>
-                            @permission('bills-create')
-                                <li><a class="slide-item" href="{{ route('bills.create') }}"> {{ translate('اضافة فاتورة مشتريات') }}</a></li>
-                            @endpermission
-
-                            @permission('bills-read')
-                                <li><a class="slide-item" href="{{ route('bills.index') }}">{{ translate('قائمة فواتير المشتريات') }}</a></li>
-                            @endpermission
-
                             <li class="side-item side-item-category">{{ translate('فواتير المبيعات') }}</li>
                             @permission('invoices-create')
                                 <li><a class="slide-item" href="{{ route('invoices.create') }}"> {{ translate('اضافة فاتورة مبيعات') }}</a></li>
@@ -171,6 +162,16 @@
 
                             @permission('invoices-read')
                                 <li><a class="slide-item" href="{{ route('invoices.index') }}">{{ translate('قائمة فواتير المبيعات') }}</a></li>
+                            @endpermission
+
+                            
+                            <li class="side-item side-item-category">{{ translate('فواتير المشتريات') }}</li>
+                            @permission('bills-create')
+                                <li><a class="slide-item" href="{{ route('bills.create') }}"> {{ translate('اضافة فاتورة مشتريات') }}</a></li>
+                            @endpermission
+
+                            @permission('bills-read')
+                                <li><a class="slide-item" href="{{ route('bills.index') }}">{{ translate('قائمة فواتير المشتريات') }}</a></li>
                             @endpermission
                     </ul>
                 </li>

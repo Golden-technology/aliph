@@ -48,14 +48,14 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         return DB::transaction(function () use($request) {
             $invoice = Invoice::create($request->all());
 
             if($request->items) {
                 for ($i=0; $i < count($request->items); $i++) { 
 
-                    $item_unit = ItemUnit::where('item_id', $request->items[$i])->where('unit_id', $request->units[$i])->first();
-                    $item_store = ItemStore::where('item_unit_id', $item_unit->id ?? null)->where('store_id', $request->store_id)->first();
+                    $item_store = ItemStore::where('item_id', $request->items[$i] ?? null)->where('store_id', $request->store_id)->first();
                     
                     if($item_store) {
                         if($item_store->quantity >= $request->quantity[$i]) {
@@ -64,7 +64,6 @@ class InvoiceController extends Controller
                             ]);
 
                             $invoice->items()->create([
-                                // 'bill_id'       => $bill->id,
                                 'item_store_id' => $item_store->id,
                                 'quantity'      => $request->quantity[$i],
                                 'price'         => $request->price[$i],
@@ -130,8 +129,7 @@ class InvoiceController extends Controller
             if($request->items) {
                 for ($i=0; $i < count($request->items); $i++) { 
 
-                    $item_unit = ItemUnit::where('item_id', $request->items[$i])->where('unit_id', $request->units[$i])->first();
-                    $item_store = ItemStore::where('item_unit_id', $item_unit->id ?? null)->where('store_id', $request->store_id)->first();
+                    $item_store = ItemStore::where('item_id', $request->items[$i] ?? null)->where('store_id', $request->store_id)->first();
                     
                     if($item_store) {
                         if(isset($invoice->items[$i])) {
