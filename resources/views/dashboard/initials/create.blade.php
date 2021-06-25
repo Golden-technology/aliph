@@ -1,16 +1,16 @@
-@extends('dashboard.layouts.master')
+@extends('dashboard.layouts.master', ['modals' => ['customer', 'store', 'tax'] ])
 
 @section('title')
-{{ translate('اضافة فاتورة مبيعات') }}
+{{ translate('اضافة عرض') }}
 @endsection
 
 @section('content')
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
-            <form action="{{ route('invoices.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('initials.store') }}" method="POST" enctype="multipart/form-data">
                 <div class="card-header">
-                    <h3>{{ translate('اضافة فاتورة مبيعات') }}</h3>
+                    <h3>{{ translate('اضافة عرض') }}</h3>
                 </div>
                 <div class="card-body">
                     <div>
@@ -20,12 +20,19 @@
                                 <div class="row">
 
                                     <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="recipient-name"
+                                        <label for="recipient-name"
                                                 class="col-form-label">{{ translate('المخزن') }}
                                                 :</label>
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="button"
+                                                 data-toggle="modal" 
+                                                 data-target="#storeModal"
+                                                >
+                                                +</button>
+                                            </div>
                                             <select id="store" class="form-control"
-                                                name="store_id">
+                                                name="store_id" onchange="getItems(this.value)">
                                                 <option disabled selected value="">
                                                     {{ translate('اختار المخزن') }}
                                                 </option>
@@ -41,15 +48,24 @@
                                             <label for="recipient-name"
                                                 class="col-form-label">{{ translate('العميل') }}
                                                 :</label>
-                                            <select class="form-control" name="customer_id">
-                                                <option disabled selected value="">
-                                                    {{ translate('اختار العميل') }}
-                                                </option>
-                                                @foreach($customers as $customer)
-                                                    <option value="{{ $customer->id }}">{{ $customer->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                                <div class="input-group">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-primary" type="button"
+                                                         data-toggle="modal" 
+                                                         data-target="#customerModal"
+                                                        >
+                                                        +</button>
+                                                    </div>
+                                                    <select class="form-control" name="customer_id">
+                                                        <option disabled selected value="">
+                                                            {{ translate('اختار العميل') }}
+                                                        </option>
+                                                        @foreach($customers as $customer)
+                                                            <option value="{{ $customer->id }}">{{ $customer->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                         </div>
                                     </div>
 
@@ -89,14 +105,24 @@
                                             <label for="recipient-name"
                                                 class="col-form-label">{{ translate('الضريبة') }}
                                                 :</label>
-                                            <select class="form-control" name="tax">
-                                                <option disabled selected value="">
-                                                    {{ translate('اختار الضريبة') }}
-                                                </option>
-                                                @foreach($taxes as $tax)
-                                                    <option value="{{ $tax->id }}">{{ $tax->value }}%</option>
-                                                @endforeach
-                                            </select>
+                                                <div class="input-group">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-primary" type="button"
+                                                         data-toggle="modal" 
+                                                         data-target="#taxModal"
+                                                        >
+                                                        +</button>
+                                                    </div>
+                                                    <select class="form-control" name="tax">
+                                                        <option disabled selected value="">
+                                                            {{ translate('اختار الضريبة') }}
+                                                        </option>
+                                                        @foreach($taxes as $tax)
+                                                            <option value="{{ $tax->id }}">{{ $tax->value }}%</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            
                                         </div>
                                     </div>
 
@@ -108,8 +134,6 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>{{ translate('المنتج') }}
-                                                    </th>
-                                                    <th>{{ translate('الوحدة') }}
                                                     </th>
                                                     <th>{{ translate('الكمية') }}
                                                     </th>
@@ -165,20 +189,19 @@
             items = await seandRequest("{{ url('store/items') }}" + '/' + id , 'GET')
             $('.items').html(`<option disabled selected value="">{{ translate('اختار المنتج') }}</option>`);
             items.forEach(item => {
-                let option = `<option value="`+ item.item_unit.item.id +`">`+ item.item_unit.item.name +`</option>`
+                let option = `<option value="`+ item.item.id +`">`+ item.item.name +`</option>`
                 $('.items').append(option);
-                // console.log(item.item_unit.item)
             });
         }
 
-        async function getUnits(id) {
-            units = await seandRequest("{{ url('item/units') }}" + '/' + id , 'GET')
-            $('.units').html(`<option disabled selected value="">{{ translate('اختار الوحدة') }}</option>`);
-            units.forEach(unit => {
-                let option = `<option value="`+ unit.unit.id +`">`+ unit.unit.name +`</option>`
-                $('.units').append(option);
-            });
-        }
+        // async function getUnits(id) {
+        //     units = await seandRequest("{{ url('item/units') }}" + '/' + id , 'GET')
+        //     $('.units').html(`<option disabled selected value="">{{ translate('اختار الوحدة') }}</option>`);
+        //     units.forEach(unit => {
+        //         let option = `<option value="`+ unit.unit.id +`">`+ unit.unit.name +`</option>`
+        //         $('.units').append(option);
+        //     });
+        // }
 
 
         $(function () {
@@ -191,21 +214,16 @@
                     
                     count++ 
 
-                    $('select.items').removeAttr('onchange');
-                    $('select.items').removeClass('items');
-                    $('select.units').removeClass('units');
+                    // $('select.items').removeAttr('onchange');
+                    // $('select.items').removeClass('items');
+                    // $('select.units').removeClass('units');
 
                     row = `
                     <tr>
                         <td>` + count + `</td>
                         <td>
-                            <select onchange="getUnits(this.value)" class="form-control items" name="items[]">
+                            <select class="form-control items" name="items[]">
                                 <option disabled selected value="">{{ translate('اختار المنتج') }}</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="form-control units" name="units[]">
-                                <option disabled selected value="">{{ translate('اختار الوحدة') }}</option>
                             </select>
                         </td>
                         <td>

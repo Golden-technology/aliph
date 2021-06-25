@@ -16,7 +16,7 @@
             margin-top: 4%
         }
         .input-group-append button {
-            padding : 0 20px;
+            padding : 0 10px;
         }
     </style>
 </head>

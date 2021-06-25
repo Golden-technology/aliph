@@ -22,7 +22,8 @@ class InitialInvoice extends Model
         'total',
         'customer_condition',
         'condition',
-        'item_store_id'
+        'item_store_id',
+        'store_id'
     ];
 
     public function customer()

@@ -56,13 +56,10 @@ class InitialInvoiceController extends Controller
             if($request->items) {
                 for ($i=0; $i < count($request->items); $i++) { 
 
-                    $item_unit = ItemUnit::where('item_id', $request->items[$i])->where('unit_id', $request->units[$i])->first();
-                    $item_store = ItemStore::where('item_unit_id', $item_unit->id ?? null)->where('store_id', $request->store_id)->first();
+                    $item_store = ItemStore::where('item_id', $request->items[$i] ?? null)->where('store_id', $request->store_id)->first();
                     
                     if($item_store) {
-                        if($item_store->quantity >= $request->quantity[$i]) {
                             $initial->items()->create([
-                                // 'bill_id'       => $bill->id,
                                 'item_store_id' => $item_store->id,
                                 'quantity'      => $request->quantity[$i],
                                 'price'         => $request->price[$i],
@@ -70,9 +67,6 @@ class InitialInvoiceController extends Controller
                                 'tax'           => $request->taxes[$i],
                                 'discount'      => $request->discounts[$i] ?? 0 ,
                             ]);
-                        }
-
-                        
                     }else {
                         continue;
                     }
@@ -83,7 +77,7 @@ class InitialInvoiceController extends Controller
                 'total' => $initial->items->sum('total')
             ]);
     
-            return redirect()->route('inti$initials.show' , $initial->id)->with('success', translate('تمت العملية بنجاح'));
+            return redirect()->route('initials.show' , $initial->id)->with('success', translate('تمت العملية بنجاح'));
         });
     }
 
@@ -104,9 +98,12 @@ class InitialInvoiceController extends Controller
      * @param  \App\Models\InitialInvoice  $initialInvoice
      * @return \Illuminate\Http\Response
      */
-    public function edit(InitialInvoice $initialInvoice)
+    public function edit(InitialInvoice $initial)
     {
-        //
+        $customers = Customer::all();
+        $taxes = Tax::all();
+        $stores = Store::all();
+        return view('dashboard.initials.edit', compact('initial','customers', 'taxes', 'stores'));
     }
 
     /**
@@ -116,9 +113,49 @@ class InitialInvoiceController extends Controller
      * @param  \App\Models\InitialInvoice  $initialInvoice
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, InitialInvoice $initialInvoice)
+    public function update(Request $request, InitialInvoice $initial)
     {
-        //
+        return DB::transaction(function () use($request , $initial) {
+            $initial->update($request->all());
+
+            if($request->items) {
+                for ($i=0; $i < count($request->items); $i++) { 
+
+                    $item_store = ItemStore::where('item_id', $request->items[$i] ?? null)->where('store_id', $request->store_id)->first();
+                    
+                    if($item_store) {
+                        if(isset($initial->items[$i])) {
+                            $initial->items[$i]->update([
+                                'item_store_id' => $item_store->id,
+                                'quantity'      => $request->quantity[$i],
+                                'price'         => $request->price[$i],
+                                'total'         => $request->price[$i] * $request->quantity[$i],
+                                'tax'           => $request->taxes[$i],
+                                'discount'      => $request->discounts[$i] ?? 0 ,
+                            ]);
+                        }else {
+                            $initial->items()->create([
+                                'item_store_id' => $item_store->id,
+                                'quantity'      => $request->quantity[$i],
+                                'price'         => $request->price[$i],
+                                'total'         => $request->price[$i] * $request->quantity[$i],
+                                'tax'           => $request->taxes[$i],
+                                'discount'      => $request->discounts[$i] ?? 0 ,
+                            ]);
+                        }
+
+                    }else {
+                        continue;
+                    }
+                }
+            }
+
+            $initial->update([
+                'total' => $initial->items->sum('total')
+            ]);
+    
+            return redirect()->route('initials.show' , $initial->id)->with('success', translate('تمت العملية بنجاح'));
+        });
     }
 
     /**

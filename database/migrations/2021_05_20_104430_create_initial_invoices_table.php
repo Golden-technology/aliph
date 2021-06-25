@@ -17,6 +17,7 @@ class CreateInitialInvoicesTable extends Migration
             $table->id();
             $table->foreignId('customer_id')->nullable()->constrained('customers');
             $table->foreignId('vendor_id')->nullable()->constrained('vendors');
+            $table->foreignId('store_id')->nullable()->constrained('stores');
             $table->string('status')->nullable();
             $table->string('type')->nullable();
             $table->double('total')->nullable();

@@ -16,13 +16,16 @@ class InitialInvoiceItem extends Model
      */
     protected $fillable = [
         'initial_invoice_id',
-        // 'item_store_id',
-        'item_id',
-        'unit_id',
+        'item_store_id',
         'quantity',
         'price',
         'tax',
         'discount',
         'total'
     ];
+
+    public function itemStore()
+    {
+        return $this->belongsTo(ItemStore::class , 'item_store_id');
+    }
 }
