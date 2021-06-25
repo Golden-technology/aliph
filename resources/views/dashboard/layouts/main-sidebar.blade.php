@@ -120,9 +120,7 @@
                 </li>
             @endpermission
 
-            @permission(['initials-read' , 'initials-create'])
-                {{-- <li class="side-item side-item-category">{{ translate('العملاء') }}</li> --}}
-
+            {{-- @permission(['initials-read' , 'initials-create'])
                 <li class="slide">
                     <a class="side-menu__item" data-toggle="slide" href="{{ url('/' . ($page = '#')) }}">
                         <svg
@@ -142,7 +140,7 @@
                             @endpermission
                     </ul>
                 </li>
-            @endpermission
+            @endpermission --}}
 
             @permission(['bills-read' , 'bills-create', 'invoices-read' , 'invoices-create'])
                 <li class="slide">

@@ -20,4 +20,6 @@
 
 <link href="{{URL::asset('assets/plugins/sweet-alert/sweetalert.css')}}" rel="stylesheet">
 
+@stack('css')
+
 

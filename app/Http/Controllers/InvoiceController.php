@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Tax;
 use App\Models\Item;
 use App\Models\Unit;
@@ -21,9 +22,15 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $invoices = Invoice::paginate();
+        $from = $request->from ? Carbon::parse($request->from)->startOfDay() : now()->subDays(2)->startOfDay();
+        $to = $request->to ? Carbon::parse($request->to)->endOfDay() : now()->endOfDay();
+
+        $invoices = Invoice::when($request->number , function ($q) use($request) { return $q->where('id' , $request->number); })
+        ->when($request->customer && $request->customer != "all" , function ($q) use($request) { return $q->where('customer_id' , $request->customer); } )
+        ->when($request->from || $request->to , function ($q) use($from , $to) { return $q->whereBetween('created_at' , [$from , $to]); } )
+        ->paginate();
         return view('dashboard.invoices.index', compact('invoices'));
     }
 
