@@ -185,7 +185,7 @@
             items = await seandRequest("{{ url('store/items') }}" + '/' + id , 'GET')
             $('.items').html(`<option disabled selected value="">{{ translate('اختار المنتج') }}</option>`);
             items.forEach(item => {
-                let option = `<option value="`+ item.item_unit.item.id +`">`+ item.item_unit.item.name +`</option>`
+                let option = `<option value="`+ item.item.id +`">`+ item.item.name +`</option>`
                 $('.items').append(option);
             });
         }
