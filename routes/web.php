@@ -12,11 +12,12 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\InitialInvoiceController;
-use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentMethodController;
+use App\Http\Controllers\InitialInvoiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('bills', BillController::class);
     Route::resource('methods', PaymentMethodController::class);
     Route::resource('payments', PaymentController::class);
+    Route::resource('settings', SettingController::class);
     Route::post('profile', [UserController::class, 'profile'])->name('profile');
 
 
