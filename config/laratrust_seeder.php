@@ -27,6 +27,7 @@ return [
             'invoices'      => 'c,r,u,d',
             'methods'       => 'c,r,u,d',
             'payments'      => 'c,r,u,d',
+            'settings'      => 'c,r,u,d',
             'dashboard'     => 'r',
         ],
     ],
