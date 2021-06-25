@@ -19,7 +19,7 @@
                                 <th>{{ translate('العميل') }}</th>
                                 <td>{{ $initial->customer->name }}</td>
                                 <th>{{ translate('المبلغ') }}</th>
-                                <td>{{ $initial->total }}</td>
+                                <td>{{ number_format($initial->total , 2) }}</td>
                                 <th>{{ translate('الحالة') }}</th>
                                 <td>{{ $initial->status }}</td>
                                 <th>{{ translate('تاريخ الانشاء') }}</th>
@@ -35,24 +35,34 @@
                                 <tr>
                                     <th>#</th>
                                     <th>{{ translate('المنتج') }}</th>
-                                    <th>{{ translate('الوحدة') }}</th>
                                     <th>{{ translate('الكمية') }}</th>
                                     <th>{{ translate('السعر') }}</th>
                                     <th>{{ translate('الضريبة') }}</th>
+                                    <th>{{ translate('المجموع') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($initial->items as $item)
                                     <tr>
                                         <td>{{ $loop->index + 1 }}</td>
-                                        <td>{{ $item->item->name }}</td>
-                                        <td>{{ $item->unit->name }}</td>
+                                        <td>{{ $item->itemStore->item->name }}</td>
                                         <td>{{ $item->quantity }}</td>
                                         <td>{{ $item->price }}</td>
                                         <td>{{ $item->tax }}%</td>
+                                        <td>{{ $item->quantity * $item->price }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>{{ translate('الاجمالى') }}</th>
+                                    <th>{{ count($initial->items) }}</th>
+                                    <th>{{ $initial->items->sum('quantity') }}</th>
+                                    <th>{{ number_format($initial->items->sum('price') , 2) }}</th>
+                                    <th>-</th>
+                                    <th>{{ number_format($initial->items->sum('total') , 2) }}</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                     <div class="col-md-4">
