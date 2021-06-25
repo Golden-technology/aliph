@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.master')
+@extends('dashboard.layouts.master', ['modals' => ['barcode']])
 
 @section('title')
     {{ translate('عرض منتج') }}
@@ -46,33 +46,22 @@
                                 </td>
                             </tr>
                         </table>
-
-                        {{-- <hr>
-                        <br>
-                        <h3>{{ translate('الكميات و الوحدات') }}</h3>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>{{ translate('المخزن') }}</th>
-                                    <th>{{ translate('الوحدة') }}</th>
-                                    <th>{{ translate('الكمية') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($item->stores as $store)
-                                    <tr>
-                                        <td>{{ $loop->index + 1 }}</td>
-                                        <td>{{ $store->store->name }}</td>
-                                        <td>{{ $store->unit->name }}</td>
-                                        <td>{{ $store->quantity }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table> --}}
                     </div>
                     <div class="col-md-2">
-                        <img src="{{ asset($item->image) }}" alt="">
+                        <div class="img form-group">
+                            <img src="{{ asset($item->image) }}" alt="">
+                        </div>
+                        <div class="barcode">
+                            <h3>
+                                {!! DNS1D::getBarcodeHTML($item->barcode, "C128",1.4,44) !!}
+                            </h3>
+                            <p class="text-center">{{ $item->barcode }}</p>
+                            <button class="btn btn-primary btn-block print" 
+                            data-toggle="modal" 
+                            data-target="#barcodeModal"
+                            data-item="{{ $item->id }}"
+                            ><i class="fa fa-print"></i> طباعة</button>
+                        </div>
                     </div>
                 </div>
                 
