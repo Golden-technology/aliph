@@ -5,6 +5,16 @@
 @endsection
 
 @section('content')
+
+<!-- breadcrumb -->
+<x-bread-crumb
+:breads="[
+    ['url' => url('/') , 'title' => translate('لوحة التحكم') , 'isactive' => false],
+    ['url' => route('customers.index') , 'title' => translate('العملاء') , 'isactive' => true],
+]">
+</x-bread-crumb>
+<!-- /breadcrumb -->
+
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
@@ -23,7 +33,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table text-nowrap">
+                    <table class="table datatable text-center text-nowrap">
                         <thead>
                             <tr>
                                 <th class="border-top-0">#</th>

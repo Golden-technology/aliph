@@ -5,6 +5,16 @@
 @endsection
 
 @section('content')
+
+<!-- breadcrumb -->
+<x-bread-crumb
+:breads="[
+    ['url' => url('/') , 'title' => translate('لوحة التحكم') , 'isactive' => false],
+    ['url' => route('payments.index') , 'title' => translate('الدفعات') , 'isactive' => false],
+    ['url' => route('payments.show', $payment->id) , 'title' =>  translate('دفعة رقم ')  .  $payment->id , 'isactive' => true],
+]">
+</x-bread-crumb>
+<!-- /breadcrumb -->
 <div class="row">
     <div class="col-sm-12">
         <div class="card">

@@ -93,7 +93,7 @@
     } );
     $(function(){
         if (!$.fn.DataTable.isDataTable('table') ) {
-            $('table').dataTable({
+            $('table.datatable').dataTable({
                 'dom': 'Bfrtip',
                 buttons: [
                     {

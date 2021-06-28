@@ -5,6 +5,17 @@
 @endsection
 
 @section('content')
+
+
+<!-- breadcrumb -->
+<x-bread-crumb
+:breads="[
+    ['url' => url('/') , 'title' => translate('لوحة التحكم') , 'isactive' => false],
+    ['url' => route('settings.index') , 'title' => translate('الاعدادات') , 'isactive' => true],
+]">
+</x-bread-crumb>
+<!-- /breadcrumb -->
+
 <div id="accordion">
     <div class="card">
         <div class="card-header" id="headingOne">

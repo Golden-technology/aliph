@@ -5,6 +5,18 @@
 @endsection
 
 @section('content')
+
+<!-- breadcrumb -->
+<x-bread-crumb
+:breads="[
+    ['url' => url('/') , 'title' => translate('لوحة التحكم') , 'isactive' => false],
+    ['url' => route('items.index') , 'title' => translate('المنتجات') , 'isactive' => false],
+    ['url' => route('items.show', $item->id) , 'title' =>  $item->name , 'isactive' => false],
+    ['url' => '#' , 'title' => translate('تعديل') , 'isactive' => true],
+]">
+</x-bread-crumb>
+<!-- /breadcrumb -->
+
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
