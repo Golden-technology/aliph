@@ -16,6 +16,57 @@
                 <a class="open-toggle" href="#"><i class="header-icon fe fe-align-left"></i></a>
                 <a class="close-toggle" href="#"><i class="header-icons fe fe-x"></i></a>
             </div>
+            <ul class="nav">
+                <li class="">
+                    <div class="dropdown  nav-itemd-none d-md-flex">
+                        <a href="#" class="d-flex  nav-item nav-link pl-0" data-toggle="dropdown"
+                            aria-expanded="false">
+                            <span class=" align-self-center"><i style="color: #a8b1c7" class="fa fa-plus"></i></span>
+                            {{-- <div class="my-auto">
+                                <strong class="mr-2 ml-2 my-auto">{{ translate('روابط سريعة') }}</strong>
+                            </div> --}}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" x-placement="bottom-end">
+                            <a href="{{ route('initials.create') }}" class="dropdown-item d-flex ">
+                                <span class=" ml-3 align-self-center fa fa-plus"></span>
+                                <div class="d-flex">
+                                    <span class="">{{ translate('اضافة عرض سعر') }}</span>
+                                </div>
+                            </a>
+                            <a href="{{ route('invoices.create') }}" class="dropdown-item d-flex ">
+                                <span class=" ml-3 align-self-center fa fa-plus"></span>
+                                <div class="d-flex">
+                                    <span class="">{{ translate('اضافة فاتورة مبيعات') }}</span>
+                                </div>
+                            </a>
+                            <a href="{{ route('bills.create') }}" class="dropdown-item d-flex ">
+                                <span class=" ml-3 align-self-center fa fa-plus"></span>
+                                <div class="d-flex">
+                                    <span class="">{{ translate('اضافة فاتورة مشتريات') }}</span>
+                                </div>
+                            </a>
+                            <a href="{{ route('customers.create') }}" class="dropdown-item d-flex ">
+                                <span class=" ml-3 align-self-center fa fa-plus"></span>
+                                <div class="d-flex">
+                                    <span class="">{{ translate('اضافة عميل') }}</span>
+                                </div>
+                            </a>
+                            <a href="{{ route('vendors.create') }}" class="dropdown-item d-flex ">
+                                <span class=" ml-3 align-self-center fa fa-plus"></span>
+                                <div class="d-flex">
+                                    <span class="">{{ translate('اضافة مورد') }}</span>
+                                </div>
+                            </a>
+                            <a href="{{ route('items.create') }}" class="dropdown-item d-flex ">
+                                <span class=" ml-3 align-self-center fa fa-plus"></span>
+                                <div class="d-flex">
+                                    <span class="">{{ translate('اضافة منتج') }}</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
             <!-- <div class="main-header-center mr-3 d-sm-none d-md-none d-lg-block">
                 <input class="form-control" placeholder="Search for anything..." type="search"> <button class="btn"><i
                         class="fas fa-search d-none d-md-block"></i></button>

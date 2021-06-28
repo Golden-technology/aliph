@@ -5,6 +5,15 @@
 @endsection
 
 @section('content')
+<!-- breadcrumb -->
+<x-bread-crumb
+:breads="[
+    ['url' => url('/') , 'title' => translate('لوحة التحكم') , 'isactive' => false],
+    ['url' => '#' , 'title' => translate('فواتير المشتريات') , 'isactive' => true],
+]">
+</x-bread-crumb>
+<!-- /breadcrumb -->
+
 <div class="row">
     <div class="col-md-12">
         <x-filter-component id="true" vendors="true" date="true"></x-filter-component>
@@ -26,7 +35,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table text-nowrap">
+                    <table class="table datatable text-nowrap text-center">
                         <thead>
                             <tr>
                                 <th class="border-top-0">#</th>

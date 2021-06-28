@@ -6,6 +6,17 @@
 
 
 @section('content')
+
+<!-- breadcrumb -->
+<x-bread-crumb
+:breads="[
+    ['url' => url('/') , 'title' => translate('لوحة التحكم') , 'isactive' => false],
+    ['url' => route('customers.index') , 'title' => translate('العملاء') , 'isactive' => false],
+    ['url' => route('customers.show', $customer->id) , 'title' => $customer->name , 'isactive' => true],
+]">
+</x-bread-crumb>
+<!-- /breadcrumb -->
+
 <div class="row">
     <div class="col-sm-12">
         <div class="card">

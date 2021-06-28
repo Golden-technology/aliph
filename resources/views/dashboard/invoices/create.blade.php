@@ -5,6 +5,17 @@
 @endsection
 
 @section('content')
+
+<!-- breadcrumb -->
+<x-bread-crumb
+:breads="[
+    ['url' => url('/') , 'title' => translate('لوحة التحكم') , 'isactive' => false],
+    ['url' => route('invoices.index') , 'title' => translate('فواتير المبيعات') , 'isactive' => false],
+    ['url' => '#' , 'title' => translate('اضافة') , 'isactive' => true],
+]">
+</x-bread-crumb>
+<!-- /breadcrumb -->
+
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
