@@ -9,8 +9,8 @@ trait HasImage
         $fileupload = $image;
         $extention  = $fileupload->getClientOriginalExtension();
         $class_basename = class_basename(self::class);
-        $path       = $fileupload->move(public_path('images' . '/' .  $class_basename), 'image_' . date('Y-m-d H:i') . $name_image_rand .'.' . $extention);
-        $nameimage = 'image_' . date('Y-m-d H:i') . $name_image_rand .  '.' . $extention;
+        $path       = $fileupload->move(public_path('images' . '/' .  $class_basename), "invoice" .'.' . $extention);
+        $nameimage = "invoice" .  '.' . $extention;
         return $nameimage;
     }
 }

@@ -1013,6 +1013,9 @@ slide is-expanded side-menu__item {
   .tile {
     border: 1px solid #ddd;
   }
+  td.options , th.options {
+    display:none !important;
+  }
 }
 
 .sidenav-toggled .app-sidebar__user .avatar-md {

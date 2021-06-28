@@ -13,7 +13,7 @@
                     {{ translate('قائمة الموردين') }}
                     @permission('vendors-create')
                     <a 
-                    class="btn btn-primary btn-sm left vendor"
+                    class="btn btn-primary float-left"
                     href="{{ route('vendors.create') }}"
                     >
                     <i class="fa fa-plus"> {{ translate('اضافة') }}</i>
@@ -30,7 +30,7 @@
                                 <th class="border-top-0">{{ translate('الاسم') }}</th>
                                 <th class="border-top-0">{{ translate('رقم الهاتف') }}</th>
                                 <th class="border-top-0">{{ translate('البريد الالكتروني') }}</th>
-                                <th class="border-top-0">{{ translate('خيارات') }}</th>
+                                <th class="border-top-0 options">{{ translate('خيارات') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +40,7 @@
                                     <td>{{ $vendor->name }}</td>
                                     <td>{{ $vendor->phone }}</td>
                                     <td>{{ $vendor->email }}</td>
-                                    <td>
+                                    <td class="options">
                                         @permission('vendors-read')
                                             <a href="{{ route('vendors.show', $vendor->id) }}" class="btn btn-info btn-sm text-white"><i class="fa fa-eye"></i> {{ translate('عرض') }}</a>
                                         @endpermission
