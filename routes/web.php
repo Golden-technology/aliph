@@ -55,7 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
     // custome route 
     Route::get('store/items/{id}', [HomeController::class, 'storeItems']);
     Route::get('item/units/{id}', [HomeController::class, 'units']);
-    Route::put('prices/update', [StoreController::class, 'updatePrices'])->name('prices.update');
+    Route::put('prices/update', [StoreController::class, 'updatePrices'])->name('prices.update'); 
 });
 
 
