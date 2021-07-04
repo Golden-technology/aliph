@@ -30,11 +30,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $customers = Customer::count();
-        $vendors = Vendor::count();
-        $invoices = Invoice::sum('total');
-        $bills = Bill::sum('total');
-        return view('dashboard.index' , compact('customers' , 'vendors', 'invoices' , 'bills'));
+        return view('dashboard.home');
     }
 
     public function storeItems($store)
