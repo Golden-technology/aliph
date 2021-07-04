@@ -16,6 +16,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\InitialInvoiceController;
 
@@ -31,9 +32,12 @@ use App\Http\Controllers\InitialInvoiceController;
 */
 
 
-
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [HomeController::class , 'index']);
+});
+
+Route::group(['prefix' => 'stores',  'middleware' => 'auth'], function () {
+    Route::get('/', [DashboardController::class , 'index'])->name('dashboard.stores.index');
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('customers', CustomerController::class);
