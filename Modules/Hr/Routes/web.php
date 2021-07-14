@@ -16,7 +16,7 @@ use Modules\Hr\Http\Controllers\HrController;
 */
 Route::group(['middleware' => 'auth'], function() {
     Route::prefix('hr')->group(function() {
-        Route::get('/', [HrController::class , 'index']);
+        Route::get('/', [HrController::class , 'index'])->name('dashboard.hr.index');
 
         Route::resources([
             'departments' => DepartmentController::class,

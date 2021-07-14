@@ -142,7 +142,6 @@ class BillController extends Controller
     public function update(Request $request, Bill $bill)
     {
         $request->validate([
-            'items' => ['required' ,  'array']
             'items' => ['required' ,  'array'],
             'store_id' => ['required'],
         ]);
